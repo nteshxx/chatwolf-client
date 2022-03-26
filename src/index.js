@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.css';
 import App from './App';
-import { UserContextProvider } from './contexts/UserContext';
+import { UserContextProvider } from './contexts/UserContext.js';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
