@@ -7,7 +7,6 @@ const Conversations = () => {
     document.getElementById('1').setAttribute("class", "chat-card-active");
   }
 
-
   return (
     <div id="chat-card-wrapper">
       <div id="1" className="chat-card" onclick={() => activeCard()}>
