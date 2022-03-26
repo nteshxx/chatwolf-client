@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './styles/index.css';
 import App from './App';
-import { UserContextProvider } from './Contexts/UserContext';
+import { UserContextProvider } from './contexts/UserContext';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 ReactDOM.render(
   <React.StrictMode>
     <UserContextProvider>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </UserContextProvider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import axios from 'axios';
-import { UserContext } from '../Contexts/UserContext';
+import { UserContext } from '../contexts/UserContext';
+import '../styles/onlineusers.css';
 
 const OnlineUsers = () => {
   const { usernameState, receiverState, messagesState, chatIdState, onlineState, tokenState } = useContext(UserContext);

@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import User from './User';
-import OnlineUsers from './OnlineUsers';
-import Conversations from './Conversations';
-import Search from './Search';
-import ChatBox from './ChatBox';
+import User from '../components/User';
+import OnlineUsers from '../components/OnlineUsers';
+import Conversations from '../components/Conversations';
+import Search from '../components/Search';
+import ChatBox from '../components/ChatBox';
+import '../styles/dashboard.css';
 
 const DashBoard = () => {
   const navigate = useNavigate();

@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/message.css';
 
 const ChatMessage = ({ messageType, text, index }) => {
   return (

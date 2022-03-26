@@ -1,0 +1,31 @@
+#user {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 14rem;
+  max-width: 14rem;
+  z-index: 1;
+  cursor: default;
+}
+
+.user-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 3rem auto 1rem auto;
+  overflow: hidden;
+  border: 3px solid transparent;
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+#user-name {
+  text-align: center;
+  white-space: nowrap;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Ubuntu', sans-serif;
+  color: black;
+  margin: 1rem auto -1rem;
+  overflow: hidden;
+}

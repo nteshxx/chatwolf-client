@@ -1,12 +1,13 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import ChatMessage from './ChatMessage';
-import user from '../Assets/default-user.svg';
-import logoutButton from '../Assets/logout-button.svg';
-import sendButton from '../Assets/send.svg';
-import attachmentButton from '../Assets/attachment.svg';
+import user from '../assets/default-user.svg';
+import logoutButton from '../assets/logout-button.svg';
+import sendButton from '../assets/send.svg';
+import attachmentButton from '../assets/attachment.svg';
 import axios from 'axios';
-import { UserContext } from '../Contexts/UserContext';
+import { UserContext } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
+import '../styles/chatbox.css';
 
 const ChatBox = (props) => {
   const { onLogout } = props;

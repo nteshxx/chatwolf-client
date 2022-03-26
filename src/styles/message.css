@@ -1,0 +1,31 @@
+.message-body {
+  width: fit-content;
+  max-width: 260px;
+  padding: 10px 14px;
+  margin: 18px 14px;
+  border-radius: 18px;
+  align-items: center;
+  box-shadow: 4px 4px 4px rgba(122, 122, 122, 0.3);
+  cursor: pointer;
+}
+
+.message-body h4 {
+  overflow-wrap: break-word;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+#sent {
+  color: black;
+  background-color: #d9e4f5;
+  margin-left: auto;
+  margin-right: 40px;
+}
+
+#received {
+  color: black;
+  background: white;
+  margin-left: 20px;
+}

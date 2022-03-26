@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import user from '../Assets/default-user.svg';
-import { UserContext } from '../Contexts/UserContext';
+import user from '../assets/default-user.svg';
+import { UserContext } from '../contexts/UserContext';
+import '../styles/user.css';
 
 const User = () => {
   const { usernameState } = useContext(UserContext);

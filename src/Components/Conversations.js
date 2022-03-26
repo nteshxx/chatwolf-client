@@ -1,10 +1,16 @@
-import avatar from '../Assets/default-user.svg';
-import female from '../Assets/female-user.svg';
+import avatar from '../assets/default-user.svg';
+import female from '../assets/female-user.svg';
+import '../styles/conversation.css';
 
 const Conversations = () => {
+  const activeCard = () => {
+    document.getElementById('1').setAttribute("class", "chat-card-active");
+  }
+
+
   return (
     <div id="chat-card-wrapper">
-      <div className="chat-card">
+      <div id="1" className="chat-card" onclick={() => activeCard()}>
         <div className="chat-card-image">
           <img src={avatar} alt="" />
         </div>
@@ -17,7 +23,7 @@ const Conversations = () => {
           <h5 className="unseen">7</h5>
         </div>
       </div>
-      <div className="chat-card">
+      <div id="2" className="chat-card">
         <div className="chat-card-image">
           <img src={avatar} alt="" />
         </div>

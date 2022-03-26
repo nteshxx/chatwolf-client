@@ -1,0 +1,103 @@
+#online-container {
+  position: relative;
+  margin-top: 2rem;
+  width: 14rem;
+  max-width: 14rem;
+  z-index: 1;
+  overflow: hidden;
+}
+
+#online-container::before {
+  content: '';
+  height: 2px;
+  width: 80%;
+  top: 0%;
+  left: 10%;
+  background: white;
+  position: absolute;
+  border-radius: 25px;
+  display: block;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+#online-now {
+  color: #25d366;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 14px;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+#online-users {
+  list-style-type: none;
+  height: 300px;
+  overflow: scroll;
+}
+
+#online-users::-webkit-scrollbar {
+  width: 4px;
+  height: 0;
+}
+
+#online-users::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px rgba(255, 255, 255, 0);
+}
+
+#online-users::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right bottom, #ffffffa7, #ffffffa3);
+}
+
+#online-users li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#online-users li:hover {
+  cursor: pointer;
+}
+
+.online-user {
+  padding-left: 3rem;
+  margin-right: 3rem;
+  color: #098474;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 38px;
+  white-space: nowrap;
+  display: inline-block;
+  overflow: hidden;
+  transition: all 100ms ease;
+}
+
+#online-users li:hover .online-user {
+  color: black;
+}
+
+.new-message-count {
+  position: absolute;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: #00bfff;
+  width: 20px;
+  height: 20px;
+  margin-left: 11rem;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  display: inline-block;
+  overflow: hidden;
+}
+
+#online-users li:hover .new-message-count {
+  color: black;
+  background: white;
+}

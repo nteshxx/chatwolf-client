@@ -1,9 +1,10 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import art from '../Assets/unlock.svg';
+import art from '../assets/unlock.svg';
 import axios from 'axios';
 import io from 'socket.io-client';
-import { UserContext } from '../Contexts/UserContext';
+import { UserContext } from '../contexts/UserContext';
+import '../styles/login.css';
 
 const Login = () => {
   const { usernameState, tokenState, socketState, onlineState } = useContext(UserContext);
@@ -83,7 +84,7 @@ const Login = () => {
         </div>
         <div id="login-div">
           <h2 className="login-logo">
-            Chat<span>Boy</span>
+            Chat<span>Wolf</span>
           </h2>
           <form>
             {signup && (

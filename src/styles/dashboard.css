@@ -1,0 +1,48 @@
+#main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+}
+
+#glass {
+  width: 1230px;
+  min-height: 598px;
+  display: flex;
+  backdrop-filter: blur(50px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: linear-gradient(to right bottom, #ffffffa7, #ffffffa3);
+  border-radius: 5px;
+  border-left: 1px solid rgba(255, 255, 255, 0.8);
+  border-top: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+#left-div {
+  margin-right: 4px;
+}
+
+#mid-div {
+  padding-right: 1rem;
+  background: white;
+}
+
+.logo {
+  padding-left: 50px;
+  padding-top: 40px;
+  margin-bottom: 25px;
+  color: black;
+  font-family: 'Playball', cursive;
+  font-size: 28px;
+  font-weight: 500;
+  cursor: default;
+}
+
+.logo span {
+  color: #fd1593;
+}
+
+#right-div {
+  width: 642px;
+  background: white;
+}
