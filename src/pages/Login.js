@@ -5,7 +5,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import { UserContext } from '../contexts/UserContext';
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/login.css';
 
 const { REACT_APP_API } = process.env;
