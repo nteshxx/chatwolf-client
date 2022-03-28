@@ -3,6 +3,8 @@ import axios from 'axios';
 import { UserContext } from '../contexts/UserContext';
 import '../styles/onlineusers.css';
 
+const { REACT_APP_API } = process.env;
+
 const OnlineUsers = () => {
   const { usernameState, receiverState, messagesState, chatIdState, onlineState, tokenState } = useContext(UserContext);
   const [username] = usernameState;
@@ -21,7 +23,7 @@ const OnlineUsers = () => {
   }
 
   const getPreviousMessages = async (chatid) => {
-    const res = await axios.post('http://localhost:5000/chat/get-messages', { chatId: chatid }, {
+    const res = await axios.post(`${REACT_APP_API}/chat/get-messages`, { chatId: chatid }, {
       headers: {
         'Authorization': `Bearer ${token}`
       }

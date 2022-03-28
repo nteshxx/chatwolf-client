@@ -20,6 +20,8 @@ const ChatBox = (props) => {
   const [message, setMessage] = useState('');
   const [socket] = socketState;
 
+  const { REACT_APP_API } = process.env;
+
   const navigate = useNavigate();
   const divRef = useRef(null);
 
@@ -39,7 +41,7 @@ const ChatBox = (props) => {
   }, [messages]);
 
   const sendMessage = async () => {
-    const res = await axios.post('http://localhost:5000/chat/send-message', {
+    const res = await axios.post(`${REACT_APP_API}/chat/send-message`, {
       senderId: await username.split('-')[1],
       receiverId: await receiver.split('-')[1],
       chatId: chatId,

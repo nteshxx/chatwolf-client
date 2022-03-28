@@ -4,7 +4,11 @@ import art from '../assets/unlock.svg';
 import axios from 'axios';
 import io from 'socket.io-client';
 import { UserContext } from '../contexts/UserContext';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import '../styles/login.css';
+
+const { REACT_APP_API } = process.env;
 
 const Login = () => {
   const { usernameState, tokenState, socketState, onlineState } = useContext(UserContext);
@@ -23,8 +27,18 @@ const Login = () => {
   const [password, setPassword] = useState(null);
   const [signup, setSignup] = useState(false);
 
+  const notify = (message) => toast(`${message}`, {
+    position: "top-right",
+    autoClose: 1500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    });
+
   const register = async () => {
-    const res = await axios.post('http://localhost:5000/auth/register', {
+    const res = await axios.post(`${REACT_APP_API}/auth/register`, {
       name: name,
       email: email,
       password: password,
@@ -33,7 +47,7 @@ const Login = () => {
   };
 
   const login = async () => {
-    const res = await axios.post('http://localhost:5000/auth/login', {
+    const res = await axios.post(`${REACT_APP_API}/auth/login`, {
       email: email,
       password: password,
     });
@@ -46,7 +60,8 @@ const Login = () => {
       console.log('res-> ', res);
       if (res.data.message === 'Success') {
         // establish socket connection with the client 
-        const socketConnect = await io.connect('http://localhost:5000', {
+        notify('Success');
+        const socketConnect = await io.connect(`${REACT_APP_API}`, {
           query: res.data.accessToken
         });
         // add user to the list of online users
@@ -64,7 +79,7 @@ const Login = () => {
       }
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data.message);
+        await notify(error.response.data.message)
       } else {
         console.log(error);
       }
@@ -151,6 +166,7 @@ const Login = () => {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

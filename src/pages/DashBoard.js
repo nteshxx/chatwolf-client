@@ -22,7 +22,7 @@ const DashBoard = () => {
         </div>
         <div id="mid-div">
           <h1 className="logo">
-            Chat<span>Boy</span>
+            Chat<span>Wolf</span>
           </h1>
           <Search />
           <Conversations />
