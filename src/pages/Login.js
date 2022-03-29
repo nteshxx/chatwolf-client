@@ -1,90 +1,42 @@
-import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import art from '../assets/unlock.svg';
-import axios from 'axios';
-import io from 'socket.io-client';
-import { UserContext } from '../contexts/UserContext';
-import { ToastContainer, toast } from 'react-toastify';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../redux/auth.slice";
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import art from '../assets/unlock.svg';
 import '../styles/login.css';
 
-const { REACT_APP_API } = process.env;
-
 const Login = () => {
-  const { usernameState, tokenState, socketState, onlineState } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const [username, setUsername] = usernameState;
-  // eslint-disable-next-line no-unused-vars
-  const [token, setToken] = tokenState;
-  // eslint-disable-next-line no-unused-vars
-  const [onlineUsers, setOnlineUsers] = onlineState;
-  // eslint-disable-next-line no-unused-vars
-  const [socket, setSocket] = socketState;
-
-  const navigate = useNavigate();
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [signup, setSignup] = useState(false);
 
-  const notify = (message) => toast(`${message}`, {
-    position: "top-right",
-    autoClose: 1500,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    });
+  const { isLoggedIn } = useSelector((state) => state.auth);
 
-  const register = async () => {
-    const res = await axios.post(`${REACT_APP_API}/auth/register`, {
-      name: name,
-      email: email,
-      password: password,
-    });
-    return res;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogin = () => {    
+    setLoading(true);
+
+    dispatch(login({ email, password }))
+      .unwrap()
+      .then(() => {
+        console.log("dispatch login 7");
+        navigate("/dashboard");
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   };
 
-  const login = async () => {
-    const res = await axios.post(`${REACT_APP_API}/auth/login`, {
-      email: email,
-      password: password,
-    });
-    return res;
-  };
-
-  const loginHandler = async () => {
-    try {
-      const res = signup ? await register() : await login();
-      console.log('res-> ', res);
-      if (res.data.message === 'Success') {
-        // establish socket connection with the client 
-        notify('Success');
-        const socketConnect = await io.connect(`${REACT_APP_API}`, {
-          query: res.data.accessToken
-        });
-        // add user to the list of online users
-        await socketConnect.emit('new-online-user', `${res.data.user.name}-${res.data.user._id}`);
-        // retrieve all the online users
-        await socketConnect.on('all-online-users', (users) => {
-          console.log(users);
-          setOnlineUsers(users);
-        });
-
-        await setUsername(`${res.data.user.name}-${res.data.user._id}`);
-        await setToken(res.data.accessToken);
-        await setSocket(socketConnect);
-        navigate('/dashboard');
-      }
-    } catch (error) {
-      if (error.response) {
-        await notify(error.response.data.message)
-      } else {
-        console.log(error);
-      }
-    }
-  };
+  if (isLoggedIn) {
+    //navigate("/dashboard");
+  }
 
   return (
     <div id="main">
@@ -135,7 +87,8 @@ const Login = () => {
               <button
                 type="button"
                 id="signin-button"
-                onClick={() => loginHandler()}
+                onClick={() => handleLogin()}
+                disabled={loading}
               >
                 {signup ? 'Sign Up' : 'Log In'}
               </button>

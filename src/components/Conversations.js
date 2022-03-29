@@ -9,7 +9,7 @@ const Conversations = () => {
 
   return (
     <div id="chat-card-wrapper">
-      <div id="1" className="chat-card" onclick={() => activeCard()}>
+      <div id="1" className="chat-card" onClick={() => activeCard()}>
         <div className="chat-card-image">
           <img src={avatar} alt="" />
         </div>

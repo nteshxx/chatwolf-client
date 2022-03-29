@@ -1,21 +1,29 @@
 import { useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../contexts/UserContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { setOnlineUsers } from '../redux/user.slice';
 import '../styles/onlineusers.css';
 
 const { REACT_APP_API } = process.env;
 
 const OnlineUsers = () => {
-  const { usernameState, receiverState, messagesState, chatIdState, onlineState, tokenState } = useContext(UserContext);
-  const [username] = usernameState;
+  const { onlineUsers } = useSelector((state) => state.user);
+  const { socket, username, token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const { receiverState, messagesState, chatIdState } = useContext(UserContext);
   // eslint-disable-next-line no-unused-vars
   const [receiver, setReceiver] = receiverState;
   // eslint-disable-next-line no-unused-vars
   const [messages, setMessages] = messagesState;
   // eslint-disable-next-line no-unused-vars
   const [chatId, setChatId] = chatIdState;
-  const [token] = tokenState
-  const [onlineUsers] = onlineState;
+
+  // retrieve all the online users
+  socket.on('all-online-users', (users) => {
+    dispatch(setOnlineUsers(users));
+  });
 
   const generateChatId = async (users) => {
     users = await users.sort().map((user) => user.split('-')[1]);

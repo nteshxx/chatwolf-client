@@ -7,20 +7,21 @@ import attachmentButton from '../assets/attachment.svg';
 import axios from 'axios';
 import { UserContext } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import '../styles/chatbox.css';
+
+const { REACT_APP_API } = process.env;
 
 const ChatBox = (props) => {
   const { onLogout } = props;
-  const { receiverState, messagesState, chatIdState, tokenState, usernameState, socketState } = useContext(UserContext);
-  const [username] = usernameState;
-  const [token] = tokenState;
+  const { socket, token, username } = useSelector((state) => state.auth);
+
+  const { receiverState, messagesState, chatIdState } = useContext(UserContext);
   const [receiver] = receiverState;
   const [messages, setMessages] = messagesState;
   const [chatId] = chatIdState;
+  
   const [message, setMessage] = useState('');
-  const [socket] = socketState;
-
-  const { REACT_APP_API } = process.env;
 
   const navigate = useNavigate();
   const divRef = useRef(null);

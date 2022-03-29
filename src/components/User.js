@@ -1,16 +1,15 @@
-import React, { useContext } from 'react';
-import user from '../assets/default-user.svg';
-import { UserContext } from '../contexts/UserContext';
+import React from 'react';
+import userImage from '../assets/default-user.svg';
+import { useSelector } from 'react-redux';
 import '../styles/user.css';
 
 const User = () => {
-  const { usernameState } = useContext(UserContext);
-  const [username] = usernameState;
+  const { username } = useSelector((state) => state.auth);
 
   return (
     <div id="user">
       <div className="user-img">
-        <img src={user} alt="" />
+        <img src={userImage} alt="" />
       </div>
       <div id="user-name">{username.split('-')[0]}</div>
     </div>
