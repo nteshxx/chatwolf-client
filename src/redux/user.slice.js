@@ -7,7 +7,6 @@ export const userSlice = createSlice({
   },
   reducers: {
     setOnlineUsers: (state, action) => {
-      console.log(action.payload)
       state.onlineUsers = action.payload
     }
   },

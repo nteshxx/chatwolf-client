@@ -5,7 +5,7 @@ import logoutButton from '../assets/logout-button.svg';
 import sendButton from '../assets/send.svg';
 import attachmentButton from '../assets/attachment.svg';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMessages } from '../redux/message.slice';
 import '../styles/chatbox.css';
@@ -20,23 +20,15 @@ const ChatBox = (props) => {
   const dispatch = useDispatch();
   
   const [message, setMessage] = useState('');
-
-  const navigate = useNavigate();
   const divRef = useRef(null);
+  // const navigate = useNavigate();
 
   useEffect(() => {
-    try {
-      socket.on( `${chatId}`, (data) => {
-        console.log(data);
-        dispatch(setMessages([...messages, data]));
-      });
-    } catch (e) {
-      console.log(e);
-      navigate('/');
-    }
-
+    socket.on( `${chatId}`, (data) => {
+      dispatch(setMessages([...messages, data]));
+    });
     divRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [chatId, dispatch, messages, navigate, socket]);
+  }, [chatId, dispatch, messages, socket]);
 
   const sendMessage = async () => {
     const res = await axios.post(`${REACT_APP_API}/chat/send-message`, {
@@ -69,7 +61,6 @@ const ChatBox = (props) => {
   const handleKeyPress = (e) => {
     if(e.key === 'Enter'){
       onSendMessage(e);
-      console.log('enter key pressed')
     }
   }
 
