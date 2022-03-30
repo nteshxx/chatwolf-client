@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../redux/auth.slice";
+import { login, register } from "../redux/auth.slice";
 import art from '../assets/unlock.svg';
 import '../styles/login.css';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
@@ -20,15 +19,25 @@ const Login = () => {
 
   const handleLogin = () => {    
     setLoading(true);
-
-    dispatch(login({ email, password }))
-      .unwrap()
-      .then(() => {
-        navigate("/dashboard");
-      })
-      .catch(() => {
-        setLoading(false);
-      });
+    if (signup) {
+      dispatch(register({ name, email, password }))
+        .unwrap()
+        .then(() => {
+          navigate("/dashboard");
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
+      dispatch(login({ email, password }))
+        .unwrap()
+        .then(() => {
+          navigate("/dashboard");
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    }
   };
 
   useEffect(() => {
