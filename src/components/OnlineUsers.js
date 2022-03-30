@@ -1,8 +1,8 @@
-import { useContext } from 'react';
+import React from 'react';
 import axios from 'axios';
-import { UserContext } from '../contexts/UserContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOnlineUsers } from '../redux/user.slice';
+import { setReceiver, setMessages, setChatId } from '../redux/message.slice';
 import '../styles/onlineusers.css';
 
 const { REACT_APP_API } = process.env;
@@ -12,21 +12,13 @@ const OnlineUsers = () => {
   const { socket, username, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const { receiverState, messagesState, chatIdState } = useContext(UserContext);
-  // eslint-disable-next-line no-unused-vars
-  const [receiver, setReceiver] = receiverState;
-  // eslint-disable-next-line no-unused-vars
-  const [messages, setMessages] = messagesState;
-  // eslint-disable-next-line no-unused-vars
-  const [chatId, setChatId] = chatIdState;
-
   // retrieve all the online users
   socket.on('all-online-users', (users) => {
     dispatch(setOnlineUsers(users));
   });
 
-  const generateChatId = async (users) => {
-    users = await users.sort().map((user) => user.split('-')[1]);
+  const generateChatId = (users) => {
+    users = users.sort().map((user) => user.split('-')[1]);
     return `${users[0]}-${users[1]}`;
   }
 
@@ -39,23 +31,22 @@ const OnlineUsers = () => {
     return res;
   };  
 
-  const selectOnlineUser = async (user) => {
-    const chatid = await generateChatId([username, user]);
+  const selectOnlineUser = (user) => {
+    const chatid = generateChatId([username, user]);
+    dispatch(setChatId(chatid));
+    dispatch(setReceiver(user));
     // get previous messages
-    const previousMessages = await getPreviousMessages(chatid);
+    const previousMessages = getPreviousMessages(chatid);
     // append previous messages
     try {
       if (previousMessages.data.message === 'Success') {
-        await setMessages([...previousMessages.data.messages]);
+        dispatch(setMessages([...previousMessages.data.messages]));
       } else {
         console.log('cannot fetch previous messages');
-        await setMessages([]);
       }
     } catch (e) {
       console.log('get prevMSG error', e);
     }
-    await setReceiver(user);
-    await setChatId(chatid);
   }
 
   return (

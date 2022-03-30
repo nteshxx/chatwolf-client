@@ -1,13 +1,13 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ChatMessage from './ChatMessage';
 import user from '../assets/default-user.svg';
 import logoutButton from '../assets/logout-button.svg';
 import sendButton from '../assets/send.svg';
 import attachmentButton from '../assets/attachment.svg';
 import axios from 'axios';
-import { UserContext } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setMessages } from '../redux/message.slice';
 import '../styles/chatbox.css';
 
 const { REACT_APP_API } = process.env;
@@ -15,11 +15,9 @@ const { REACT_APP_API } = process.env;
 const ChatBox = (props) => {
   const { onLogout } = props;
   const { socket, token, username } = useSelector((state) => state.auth);
-
-  const { receiverState, messagesState, chatIdState } = useContext(UserContext);
-  const [receiver] = receiverState;
-  const [messages, setMessages] = messagesState;
-  const [chatId] = chatIdState;
+  const { receiver, messages, chatId } = useSelector((state) => state.message);
+  
+  const dispatch = useDispatch();
   
   const [message, setMessage] = useState('');
 
@@ -30,16 +28,15 @@ const ChatBox = (props) => {
     try {
       socket.on( `${chatId}`, (data) => {
         console.log(data);
-        setMessages([...messages, data]);
+        dispatch(setMessages([...messages, data]));
       });
     } catch (e) {
       console.log(e);
       navigate('/');
     }
-    
+
     divRef.current.scrollIntoView({ behavior: 'smooth' });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages]);
+  }, [chatId, dispatch, messages, navigate, socket]);
 
   const sendMessage = async () => {
     const res = await axios.post(`${REACT_APP_API}/chat/send-message`, {
@@ -61,7 +58,7 @@ const ChatBox = (props) => {
     try {
       const res = await sendMessage();
       if (res.data.message === 'Success') {
-        await setMessages([...messages, res.data.text]);
+        dispatch(setMessages([...messages, res.data.text]));
       }
     } catch (e) {
       console.log('send msg error', e);
