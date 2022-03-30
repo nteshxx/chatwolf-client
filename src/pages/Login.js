@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../redux/auth.slice";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import art from '../assets/unlock.svg';
 import '../styles/login.css';
 
@@ -26,7 +24,6 @@ const Login = () => {
     dispatch(login({ email, password }))
       .unwrap()
       .then(() => {
-        console.log("dispatch login 7");
         navigate("/dashboard");
       })
       .catch(() => {
@@ -35,7 +32,7 @@ const Login = () => {
   };
 
   if (isLoggedIn) {
-    //navigate("/dashboard");
+    // navigate("/dashboard");
   }
 
   return (
@@ -119,7 +116,6 @@ const Login = () => {
           </form>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

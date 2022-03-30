@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { toast } from 'react-toastify';
+import ToastService from "../utils/toast.service";
 import AuthService from "../services/auth.service";
 import io from 'socket.io-client';
 
@@ -7,35 +7,13 @@ const { REACT_APP_API } = process.env;
 
 const data = JSON.parse(localStorage.getItem("user"));
 
-const notifySuccess = () => toast.success('Success', {
-  position: "top-right",
-  autoClose: 1500,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-});
-
-const notifyError = (message) => toast.error(`${message}`, {
-  position: "top-right",
-  autoClose: 1500,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-});
-
 export const register = createAsyncThunk(
   "auth/register",
   async ({ name, email, password }, thunkAPI) => {
     try {
-      const response = await AuthService.register(name, email, password);
-      // thunkAPI.dispatch(setMessage(response.data.message));
-      console.log(response);
-      notifySuccess();
-      return response.data;
+      const data = await AuthService.register(name, email, password);
+      ToastService.success();
+      return data;
     } catch (error) {
       const message =
         (error.response &&
@@ -43,8 +21,7 @@ export const register = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      notifyError(message);
-      // thunkAPI.dispatch(setMessage(message));
+      ToastService.error(message);
       return thunkAPI.rejectWithValue();
     }
   }
@@ -55,9 +32,8 @@ export const login = createAsyncThunk(
   async ({ email, password }, thunkAPI) => {
     try {
       const data = await AuthService.login(email, password);
-      console.log("console here 3", data);
-      notifySuccess();
-      return { user: data };
+      ToastService.success();
+      return data;
     } catch (error) {
       const message =
         (error.response &&
@@ -65,8 +41,7 @@ export const login = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      notifyError(message);
-      //thunkAPI.dispatch(setMessage(message));
+      ToastService.error(message);
       return thunkAPI.rejectWithValue();
     }
   }
@@ -102,22 +77,25 @@ const authSlice = createSlice({
   initialState,
   extraReducers: {
     [register.fulfilled]: (state, action) => {
-      state.isLoggedIn = false;
+      state.isLoggedIn = true;
+      state.username = `${action.payload.user.name}-${action.payload.user._id}`;
+      state.token = action.payload.accessToken;
+      state.socket = connect(action.payload);
     },
     [register.rejected]: (state, action) => {
       state.isLoggedIn = false;
     },
     [login.fulfilled]: (state, action) => {
       state.isLoggedIn = true;
-      state.user = action.payload.user;
+      state.username = `${action.payload.user.name}-${action.payload.user._id}`;
+      state.token = action.payload.accessToken;
+      state.socket = connect(action.payload);
     },
     [login.rejected]: (state, action) => {
       state.isLoggedIn = false;
-      state.user = null;
     },
     [logout.fulfilled]: (state, action) => {
       state.isLoggedIn = false;
-      state.user = null;
     },
   },
 });

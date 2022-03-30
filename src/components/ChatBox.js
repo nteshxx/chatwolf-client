@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ChatMessage from './ChatMessage';
 import user from '../assets/default-user.svg';
 import logoutButton from '../assets/logout-button.svg';
@@ -7,24 +8,33 @@ import attachmentButton from '../assets/attachment.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMessages } from '../redux/message.slice';
 import { sendMessage } from "../redux/chat.slice";
+import ToastService from "../utils/toast.service";
+import AuthService from "../services/auth.service";
 import '../styles/chatbox.css';
 
-const ChatBox = (props) => {
-  const { onLogout } = props;
+const ChatBox = () => {
   const { socket, token, username } = useSelector((state) => state.auth);
   const { receiver, messages, chatId } = useSelector((state) => state.message);
   
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const divRef = useRef(null);
   
   const [message, setMessage] = useState('');
-  const divRef = useRef(null);
 
   useEffect(() => {
-    socket.on( `${chatId}`, (data) => {
-      dispatch(setMessages([...messages, data]));
-    });
+    // if someone redirects to dashboard without logging in
+    try {
+      socket.on( `${chatId}`, (data) => {
+        dispatch(setMessages([...messages, data]));
+      })
+    } catch (error) {
+      console.log(error);
+      ToastService.error('Login Required!');
+      navigate('/');
+    };
     divRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [chatId, dispatch, messages, socket]);
+  }, [chatId, dispatch, messages, navigate, socket]);
 
   const onSendMessage = () => {
     dispatch(sendMessage({ token, username, chatId, message, receiver }))
@@ -45,10 +55,15 @@ const ChatBox = (props) => {
     }
   };
 
+  const onLogout = () => {
+    AuthService.logout();
+    navigate('/');
+  };
+
   return (
     <div id="chatbox">
       <div className="chat-buttons">
-        <button id="logout-button" type="button" onClick={onLogout}>
+        <button id="logout-button" type="button" onClick={() => onLogout()}>
           <img src={logoutButton} alt="" />
         </button>
       </div>

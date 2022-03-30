@@ -11,10 +11,12 @@ const OnlineUsers = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // retrieve all the online users
-    socket.on('all-online-users', (users) => {
-      dispatch(setOnlineUsers(users));
-    });
+    try {
+      // retrieve all the online users
+      socket.on('all-online-users', (users) => {
+        dispatch(setOnlineUsers(users));
+      });
+    } catch {};
   }, [dispatch, socket]);
 
   const selectOnlineUser = (user) => {

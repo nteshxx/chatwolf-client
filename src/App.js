@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import DashBoard from './pages/DashBoard';
 import Counter from './pages/Counter';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Routing = () => {
   return (
@@ -18,6 +20,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routing />
+      <ToastContainer />
     </BrowserRouter>
   );
 }

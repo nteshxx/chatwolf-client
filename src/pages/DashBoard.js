@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import User from '../components/User';
 import OnlineUsers from '../components/OnlineUsers';
 import Conversations from '../components/Conversations';
@@ -8,11 +7,6 @@ import ChatBox from '../components/ChatBox';
 import '../styles/dashboard.css';
 
 const DashBoard = () => {
-  const navigate = useNavigate();
-
-  const logout = async () => {
-    navigate('/');
-  };
 
   return (
     <div id="main">
@@ -29,7 +23,7 @@ const DashBoard = () => {
           <Conversations />
         </div>
         <div id="right-div">
-          <ChatBox onLogout={() => logout()} />
+          <ChatBox />
         </div>
       </div>
     </div>
