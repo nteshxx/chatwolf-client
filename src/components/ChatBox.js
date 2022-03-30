@@ -4,13 +4,10 @@ import user from '../assets/default-user.svg';
 import logoutButton from '../assets/logout-button.svg';
 import sendButton from '../assets/send.svg';
 import attachmentButton from '../assets/attachment.svg';
-import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMessages } from '../redux/message.slice';
+import { sendMessage } from "../redux/chat.slice";
 import '../styles/chatbox.css';
-
-const { REACT_APP_API } = process.env;
 
 const ChatBox = (props) => {
   const { onLogout } = props;
@@ -21,7 +18,6 @@ const ChatBox = (props) => {
   
   const [message, setMessage] = useState('');
   const divRef = useRef(null);
-  // const navigate = useNavigate();
 
   useEffect(() => {
     socket.on( `${chatId}`, (data) => {
@@ -30,39 +26,24 @@ const ChatBox = (props) => {
     divRef.current.scrollIntoView({ behavior: 'smooth' });
   }, [chatId, dispatch, messages, socket]);
 
-  const sendMessage = async () => {
-    const res = await axios.post(`${REACT_APP_API}/chat/send-message`, {
-      senderId: await username.split('-')[1],
-      receiverId: await receiver.split('-')[1],
-      chatId: chatId,
-      text: message,
-      attachment: 'none',
-    }, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
-    return res;
-  };
-
-  const onSendMessage = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await sendMessage();
-      if (res.data.message === 'Success') {
-        dispatch(setMessages([...messages, res.data.text]));
-      }
-    } catch (e) {
-      console.log('send msg error', e);
-    }
+  const onSendMessage = () => {
+    dispatch(sendMessage({ token, username, chatId, message, receiver }))
+      .unwrap()
+      .then((data) => {
+        console.log("sendMessage success");
+        dispatch(setMessages([...messages, data.text]));
+      })
+      .catch(() => {
+        console.log("sendMessage error");
+      });
     setMessage('');
-  }
+  };
 
   const handleKeyPress = (e) => {
     if(e.key === 'Enter'){
-      onSendMessage(e);
+      onSendMessage();
     }
-  }
+  };
 
   return (
     <div id="chatbox">
@@ -102,7 +83,7 @@ const ChatBox = (props) => {
         <button
           id="send-button"
           type="button"
-          onClick={(e) => onSendMessage(e)}
+          onClick={() => onSendMessage()}
         >
           <img src={sendButton} alt="" />
         </button>

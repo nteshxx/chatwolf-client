@@ -16,7 +16,7 @@ export const getPreviousMessages = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log("chatservice error: ", message);
+      console.log("get-messages error: ", message);
       thunkAPI.dispatch(setMessages([]));
       return thunkAPI.rejectWithValue();
     }
@@ -27,9 +27,8 @@ export const sendMessage = createAsyncThunk(
   "chat/send-message",
   async ({ token, username, chatId, message, receiver }, thunkAPI) => {
     try {
-      const response = await ChatService.sendMessage(token, username, chatId, message, receiver);
-      console.log("chat Service res: ", response);
-      return response.data;
+      const data = await ChatService.sendMessage(token, username, chatId, message, receiver);
+      return data;
     } catch (error) {
       const message =
         (error.response &&
@@ -37,7 +36,7 @@ export const sendMessage = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log("send message error: ", message);
+      console.log("send-message error: ", message);
       return thunkAPI.rejectWithValue();
     }
   }
