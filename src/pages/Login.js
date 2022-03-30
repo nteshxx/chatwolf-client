@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../redux/auth.slice";
@@ -31,9 +31,11 @@ const Login = () => {
       });
   };
 
-  if (isLoggedIn) {
-    // navigate("/dashboard");
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <div id="main">
