@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOnlineUsers } from '../redux/user.slice';
-import { setReceiver, setMessages, setChatId } from '../redux/message.slice';
+import { setReceiver, setChatId } from '../redux/message.slice';
+import { getPreviousMessages } from "../redux/chat.slice";
 import '../styles/onlineusers.css';
-
-const { REACT_APP_API } = process.env;
 
 const OnlineUsers = () => {
   const { onlineUsers } = useSelector((state) => state.user);
@@ -19,24 +17,17 @@ const OnlineUsers = () => {
     });
   }, [dispatch, socket]);
 
-  const getPreviousMessages = (chatid) => {
-    axios.post(`${REACT_APP_API}/chat/get-messages`, { chatId: chatid }, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-    .then((response) => {
-      dispatch(setMessages([...response.data.messages]));
-    })
-    .catch((e) => {
-      console.log('get prevMSG error', e);
-    });
-  };
-
   const selectOnlineUser = (user) => {
     const participants = [username, user].sort().map((user) => user.split('-')[1]);
     const chatid = `${participants[0]}-${participants[1]}`;
-    getPreviousMessages(chatid);
+    dispatch(getPreviousMessages({ chatid, token }))
+      .unwrap()
+      .then(() => {
+        console.log("getPreviousMessages success");
+      })
+      .catch(() => {
+        console.log("getPreviousMessages error");
+      });
     dispatch(setChatId(chatid));
     dispatch(setReceiver(user));
   };
