@@ -12,6 +12,16 @@ const getPreviousMessages = async (chatId, token) => {
   return response.data;
 };
 
+const getAllChats = async (token) => {
+  const response = await axios.post(`${REACT_APP_API}/chat/all-chats`, {}, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  return response.data;
+};
+
 const sendMessage = async (token, username, chatId, message, receiver) => {
   const response = await axios.post(`${REACT_APP_API}/chat/send-message`, {
     senderId: await username.split('-')[1],
@@ -30,6 +40,7 @@ const sendMessage = async (token, username, chatId, message, receiver) => {
 
 const chatService = {
   getPreviousMessages,
+  getAllChats,
   sendMessage,
 };
 

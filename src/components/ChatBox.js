@@ -6,15 +6,15 @@ import logoutButton from '../assets/logout-button.svg';
 import sendButton from '../assets/send.svg';
 import attachmentButton from '../assets/attachment.svg';
 import { useSelector, useDispatch } from 'react-redux';
-import { setMessages } from '../redux/message.slice';
-import { sendMessage } from "../redux/chat.slice";
+import { sendMessage, setMessages } from "../redux/chat.slice";
 import ToastService from "../utils/toast.service";
 import AuthService from "../services/auth.service";
 import '../styles/chatbox.css';
 
 const ChatBox = () => {
   const { socket, token, username } = useSelector((state) => state.auth);
-  const { receiver, messages, chatId } = useSelector((state) => state.message);
+  const { receiver, chatId } = useSelector((state) => state.message);
+  const { messages } = useSelector((state) => state.chat);
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
