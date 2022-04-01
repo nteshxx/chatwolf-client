@@ -13,7 +13,7 @@ const getPreviousMessages = async (chatId, token) => {
 };
 
 const getAllChats = async (token) => {
-  const response = await axios.post(`${REACT_APP_API}/chat/all-chats`, {}, {
+  const response = await axios.get(`${REACT_APP_API}/chat/all-chats`, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
