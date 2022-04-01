@@ -1,13 +1,7 @@
 import React, { useEffect } from 'react';
-import User from '../components/User';
-import OnlineUsers from '../components/OnlineUsers';
-import Conversations from '../components/Conversations';
-import Search from '../components/Search';
-import ChatBox from '../components/ChatBox';
-
+import { ChatBox, Conversations, OnlineUsers, Search, User } from '../components';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllConversations } from "../redux/chat.slice";
-
 import '../styles/dashboard.css';
 
 const DashBoard = () => {

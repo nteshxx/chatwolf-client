@@ -12,6 +12,8 @@ const Login = () => {
   const [password, setPassword] = useState(null);
   const [signup, setSignup] = useState(false);
 
+  console.log("re render");
+
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
