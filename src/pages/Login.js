@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { login, register } from "../redux/auth.slice";
 import { FormInput } from '../components';
 import art from '../assets/unlock.svg';
+import logo from '../assets/logo.svg';
 import '../styles/login.css';
 
 const Login = () => {
@@ -55,7 +56,7 @@ const Login = () => {
           <img src={art} alt="" />
         </div>
         <div id="login-div">
-          <h2 className="login-logo">Chat<span>Wolf</span></h2>
+          <h2 className="login-logo"><img src={logo} alt="" />Chat<span>Wolf</span></h2>
           <form onSubmit={handleSubmit}>
           {signup && (
               <FormInput

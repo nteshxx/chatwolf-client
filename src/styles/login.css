@@ -74,18 +74,28 @@
 }
 
 .login-logo {
+  position: relative;
   color: black;
   font-family: 'Playball', cursive;
   font-size: 28px;
   font-weight: 500;
   margin: 0 auto;
   padding-bottom: 10px;
+  padding-left: 26px;
   text-align: center;
   cursor: default;
 }
 
 .login-logo span {
   color: #fd1593;
+}
+
+.login-logo img {
+  position: absolute;
+  height: 36px;
+  width: 36px;
+  left: 36px;
+  top: 0px;
 }
 
 #signin-button {
