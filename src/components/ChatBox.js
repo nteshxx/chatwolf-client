@@ -7,8 +7,8 @@ import sendButton from '../assets/send.svg';
 import attachmentButton from '../assets/attachment.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { sendMessage, setMessages } from "../redux/chat.slice";
+import { logout } from "../redux/auth.slice";
 import ToastService from "../utils/toast.service";
-import AuthService from "../services/auth.service";
 import '../styles/chatbox.css';
 
 const ChatBox = () => {
@@ -27,12 +27,16 @@ const ChatBox = () => {
       socket.on( `${chatId}`, (data) => {
         dispatch(setMessages([...messages, data]));
       })
-    } else {
+    }
+    divRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [chatId, dispatch, isLoggedIn, messages, socket]);
+
+  useEffect(() => {
+    if (isLoggedIn === false) {
       navigate('/');
       ToastService.error('Login Required!');
-    };
-    divRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [chatId, dispatch, isLoggedIn, messages, navigate, socket]);
+    }
+  }, [isLoggedIn, navigate]);
 
   const onSendMessage = () => {
     dispatch(sendMessage({ token, username, chatId, message, receiver }))
@@ -54,8 +58,14 @@ const ChatBox = () => {
   };
 
   const onLogout = () => {
-    AuthService.logout();
-    navigate('/');
+    dispatch(logout({token}))
+      .unwrap()
+      .then((data) => {
+        console.log(data.message);
+      })
+      .catch(() => {
+        console.log("logout error chatbox");
+      });
   };
 
   return (

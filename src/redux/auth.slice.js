@@ -47,18 +47,36 @@ export const login = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async ({ token }, thunkAPI) => {
+    try {
+      const data = await AuthService.logout(token);
+      if (data) {
+        localStorage.removeItem('user');
+        ToastService.success();
+      };
+      return data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log("logout error: ", message);
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
 const connect = (data) => {
   const socketConnection = io.connect(`${REACT_APP_API}`, {
     query: data.accessToken
   });
-  // add user to the list of online users
   socketConnection.emit('new-online-user', `${data.user.name}-${data.user._id}`);
   return socketConnection;
 };
-
-export const logout = createAsyncThunk("auth/logout", async () => {
-  AuthService.logout();
-});
 
 const initialState = data
   ? { isLoggedIn: true,
@@ -84,6 +102,9 @@ const authSlice = createSlice({
     },
     [register.rejected]: (state, action) => {
       state.isLoggedIn = false;
+      state.username = '';
+      state.token = '';
+      state.token = '';
     },
     [login.fulfilled]: (state, action) => {
       state.isLoggedIn = true;
@@ -93,9 +114,11 @@ const authSlice = createSlice({
     },
     [login.rejected]: (state, action) => {
       state.isLoggedIn = false;
+      state.username = '';
+      state.token = '';
+      state.token = '';
     },
     [logout.fulfilled]: (state, action) => {
-      console.log("logout fulfilled");
       state.isLoggedIn = false;
       state.username = '';
       state.token = '';

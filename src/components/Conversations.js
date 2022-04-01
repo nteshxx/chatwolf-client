@@ -15,7 +15,7 @@ const Conversations = () => {
           <ChatCard
             key={chat._id}
             chatId={chat._id}
-            name={chat.name}
+            userId={`${chat.name}-${chat.userid}`}
             text={chat.text}
             timeStamp={chat.timeStamp}
             total={chat.numberOfMessages}

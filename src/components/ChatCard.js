@@ -28,12 +28,12 @@ const ChatCard = (chat) => {
   };
 
   return (
-    <div className="chat-card" onClick={() => selectCard(chat.chatId, chat.name)}>
+    <div className="chat-card" onClick={() => selectCard(chat.chatId, chat.userId)}>
       <div className="chat-card-image">
         <img src={avatar} alt="" />
       </div>
       <div className="chat-card-details">
-        <h3>{chat.name}</h3>
+        <h3>{chat.userId.split('-')[0]}</h3>
         <h5>{chat.text}</h5>
       </div>
       <div className="date-notification">
