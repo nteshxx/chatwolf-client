@@ -68,6 +68,11 @@
   z-index: 10;
 }
 
+.logo-icon {
+  width: 10px;
+  height: 10px;
+}
+
 .login-logo {
   color: black;
   font-family: 'Playball', cursive;
@@ -94,10 +99,13 @@
   background-color: #fd1593;
   color: white;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 1px;
   box-shadow: 4px 4px 8px #b1b1b1, -4px -4px 8px #fff;
   transition: all 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #signin-button:hover {
@@ -133,4 +141,18 @@
   border: none;
   outline: none;
   background-color: transparent;
+}
+
+.loader {
+  border: 3px solid white;
+  border-radius: 50%;
+  border-top: 3px solid #fd1593;
+  width: 16px;
+  height: 16px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

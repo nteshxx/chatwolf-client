@@ -78,9 +78,14 @@ const Login = () => {
               placeholder="Password"
               name="password"
               autoComplete="on"
-              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,25}$"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$#!%*?&])[A-Za-z\d@$#!%*?&]{8,25}$"
             />
-            <button type="submit" id="signin-button" disabled={loading}>{signup ? 'Sign Up' : 'Log In'}</button>
+            <button type="submit" id="signin-button" disabled={loading}>
+              {signup 
+                ? <div>{loading ? <div class="loader"></div> : <div>Sign Up</div>}</div> 
+                : <div>{loading ? <div class="loader"></div> : <div>Log In</div>}</div>
+              }
+            </button>
             {signup || (<p className="forgot-password"><a href="/">Forgot Password?</a></p>)}
             {signup || (<button type="button" id="signup-button" onClick={() => setSignup(!signup)}>Sign Up</button>)}
             {signup && (<button type="button" id="signup-button" onClick={() => setSignup(!signup)}>Log In</button>)}
