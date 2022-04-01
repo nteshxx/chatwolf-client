@@ -19,6 +19,7 @@
   transition: all 200ms ease-in-out;
   appearance: none;
   -webkit-appearance: none;
+  position: relative;
 }
 
 .input-box input:focus {
@@ -32,4 +33,16 @@
   font-weight: 500;
   letter-spacing: 1px;
   text-shadow: 1px 1px 0 #fff;
+}
+
+.form-error {
+  position: absolute;
+  color: hotpink;
+  font-size: 14px;
+  margin-left: 2rem;
+  display: none;
+}
+
+.input-box input:invalid ~ span {
+  display: block;
 }

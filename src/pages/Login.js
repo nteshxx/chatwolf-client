@@ -2,24 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, register } from "../redux/auth.slice";
+import { FormInput } from '../components';
 import art from '../assets/unlock.svg';
 import '../styles/login.css';
 
 const Login = () => {
-  const [loading, setLoading] = useState(false);
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [signup, setSignup] = useState(false);
-
-  console.log("re render");
-
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
+  const [signup, setSignup] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogin = () => {    
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    }
+  }, [isLoggedIn, navigate]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const { name, email, password } = Object.fromEntries(data.entries());
+   
     setLoading(true);
     if (signup) {
       dispatch(register({ name, email, password }))
@@ -42,90 +47,46 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate("/dashboard");
-    }
-  }, [isLoggedIn, navigate]);
-
   return (
     <div id="main">
       <div id="login-glass">
         <div id="art-container">
-          <h3>
-            Unlock!
-            <br />
-            <span>the secret land of Messaging.</span>
-          </h3>
+          <h3>Unlock!<br /><span>the secret land of Messaging.</span></h3>
           <img src={art} alt="" />
         </div>
         <div id="login-div">
-          <h2 className="login-logo">
-            Chat<span>Wolf</span>
-          </h2>
-          <form>
-            {signup && (
-              <div className="input-box">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  name="name"
-                  autoComplete="off"
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-            )}
-            <div className="input-box">
-              <input
+          <h2 className="login-logo">Chat<span>Wolf</span></h2>
+          <form onSubmit={handleSubmit}>
+          {signup && (
+              <FormInput
                 type="text"
-                placeholder="Email"
-                name="email"
+                placeholder="Name"
+                name="name"
                 autoComplete="off"
-                onChange={(e) => setEmail(e.target.value)}
+                errorMessage="^^^^^^^^^^^^^^^^^^"
+                pattern="^[A-Za-z ,.']{3,20}$"
               />
-            </div>
-            <div className="input-box">
-              <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                autoComplete="off"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div className="input-box">
-              <button
-                type="button"
-                id="signin-button"
-                onClick={() => handleLogin()}
-                disabled={loading}
-              >
-                {signup ? 'Sign Up' : 'Log In'}
-              </button>
-            </div>
-            {signup || (
-              <p className="forgot-password">
-                <a href="/">Forgot Password?</a>
-              </p>
             )}
-            {signup || (
-              <button
-                type="button"
-                id="signup-button"
-                onClick={() => setSignup(!signup)}
-              >
-                Sign Up
-              </button>
-            )}
-            {signup && (
-              <button
-                type="button"
-                id="signup-button"
-                onClick={() => setSignup(!signup)}
-              >
-                Log In
-              </button>
-            )}
+            <FormInput
+              type="email"
+              placeholder="Email"
+              name="email"
+              autoComplete="off"
+              errorMessage="^^^^^^^^^^^^^^^^^^"
+              pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            />
+            <FormInput
+              type="password"
+              placeholder="Password"
+              name="password"
+              autoComplete="off"
+              errorMessage="^^^^^^^^^^^^^^^^^^"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,25}$"
+            />
+            <button type="submit" id="signin-button" disabled={loading}>{signup ? 'Sign Up' : 'Log In'}</button>
+            {signup || (<p className="forgot-password"><a href="/">Forgot Password?</a></p>)}
+            {signup || (<button type="button" id="signup-button" onClick={() => setSignup(!signup)}>Sign Up</button>)}
+            {signup && (<button type="button" id="signup-button" onClick={() => setSignup(!signup)}>Log In</button>)}
           </form>
         </div>
       </div>

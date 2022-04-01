@@ -2,14 +2,19 @@ import React from 'react';
 import '../styles/form.css';
 
 const FormInput = (props) => {
+  const { type, placeholder, name, autoComplete, errorMessage, pattern } = props;
+
   return (
     <div className="input-box">
       <input
-        type={props.type}
-        placeholder={props.placeholder}
-        name={props.name}
-        autoComplete={props.autoComplete}
+        type={type}
+        placeholder={placeholder}
+        name={name}
+        autoComplete={autoComplete}
+        pattern={pattern}
+        required={true}
       />
+      <span className='form-error'>{errorMessage}</span>
     </div>
   );
 };
