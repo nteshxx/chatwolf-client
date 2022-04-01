@@ -69,7 +69,7 @@ const initialState = data
   : { isLoggedIn: false,  
       username: '',
       token: '',
-      socket: null
+      socket: ''
     };
 
 const authSlice = createSlice({
@@ -95,7 +95,11 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
     },
     [logout.fulfilled]: (state, action) => {
+      console.log("logout fulfilled");
       state.isLoggedIn = false;
+      state.username = '';
+      state.token = '';
+      state.token = '';
     },
   },
 });

@@ -12,7 +12,7 @@ import AuthService from "../services/auth.service";
 import '../styles/chatbox.css';
 
 const ChatBox = () => {
-  const { socket, token, username } = useSelector((state) => state.auth);
+  const { socket, token, username, isLoggedIn } = useSelector((state) => state.auth);
   const { receiver, chatId } = useSelector((state) => state.message);
   const { messages } = useSelector((state) => state.chat);
   
@@ -23,18 +23,16 @@ const ChatBox = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    // if someone redirects to dashboard without logging in
-    try {
+    if (isLoggedIn) {
       socket.on( `${chatId}`, (data) => {
         dispatch(setMessages([...messages, data]));
       })
-    } catch (error) {
-      console.log(error);
-      ToastService.error('Login Required!');
+    } else {
       navigate('/');
+      ToastService.error('Login Required!');
     };
     divRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [chatId, dispatch, messages, navigate, socket]);
+  }, [chatId, dispatch, isLoggedIn, messages, navigate, socket]);
 
   const onSendMessage = () => {
     dispatch(sendMessage({ token, username, chatId, message, receiver }))

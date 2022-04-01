@@ -11,10 +11,11 @@ import { getAllConversations } from "../redux/chat.slice";
 import '../styles/dashboard.css';
 
 const DashBoard = () => {
-  const { token } = useSelector((state) => state.auth);
+  const { token, isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (isLoggedIn) {
       dispatch(getAllConversations({token}))
         .unwrap()
         .then(() => {
@@ -23,7 +24,8 @@ const DashBoard = () => {
         .catch(() => {
           console.log("getAllConversation error");
         });
-  }, [dispatch, token]);
+    }
+  }, [dispatch, isLoggedIn, token]);
 
   return (
     <div id="main">
