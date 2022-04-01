@@ -63,7 +63,6 @@ const Login = () => {
                 placeholder="Name"
                 name="name"
                 autoComplete="off"
-                errorMessage="^^^^^^^^^^^^^^^^^^"
                 pattern="^[A-Za-z ,.']{3,20}$"
               />
             )}
@@ -71,16 +70,14 @@ const Login = () => {
               type="email"
               placeholder="Email"
               name="email"
-              autoComplete="off"
-              errorMessage="^^^^^^^^^^^^^^^^^^"
+              autoComplete="on"
               pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             />
             <FormInput
               type="password"
               placeholder="Password"
               name="password"
-              autoComplete="off"
-              errorMessage="^^^^^^^^^^^^^^^^^^"
+              autoComplete="on"
               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,25}$"
             />
             <button type="submit" id="signin-button" disabled={loading}>{signup ? 'Sign Up' : 'Log In'}</button>

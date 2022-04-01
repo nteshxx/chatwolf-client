@@ -12,14 +12,13 @@
   color: black;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 1px;
   text-shadow: 1px 1px 0 #fff;
   box-shadow: inset 4px 4px 4px #babecc, inset -4px -4px 4px #fff;
   transition: all 200ms ease-in-out;
   appearance: none;
   -webkit-appearance: none;
-  position: relative;
 }
 
 .input-box input:focus {
@@ -27,22 +26,20 @@
 }
 
 .input-box input::placeholder {
-  color: black;
+  color: grey;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 1px;
   text-shadow: 1px 1px 0 #fff;
 }
 
-.form-error {
+.input-validation {
   position: absolute;
-  color: hotpink;
-  font-size: 14px;
-  margin-left: 2rem;
-  display: none;
+  margin-left: -36px;
+  margin-top: 10px;
 }
 
-.input-box input:invalid ~ span {
-  display: block;
+.input-box input:invalid ~ img {
+  display: none;
 }

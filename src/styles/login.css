@@ -20,6 +20,7 @@
 }
 
 #art-container {
+  position: relative;
   display: flex;
   align-items: center;
   padding: 48px 140px;
@@ -33,14 +34,15 @@
 }
 
 #art-container h3 {
+  position: absolute;
   color: white;
   font-size: 28px;
   line-height: 30px;
   font-weight: 600;
   margin-bottom: 40px;
   position: absolute;
-  top: 180px;
-  left: 160px;
+  top: 30px;
+  left: 40px;
 }
 
 #art-container h3 span {
@@ -91,7 +93,9 @@
   border-radius: 30px;
   background-color: #fd1593;
   color: white;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
   box-shadow: 4px 4px 8px #b1b1b1, -4px -4px 8px #fff;
   transition: all 200ms ease;
 }
@@ -105,24 +109,24 @@
 }
 
 .forgot-password {
-  padding-top: 18px;
+  padding-top: 24px;
   padding-left: 10px;
 }
 
 .forgot-password a {
   color: #fd1593;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
   text-decoration: none;
 }
 
 #signup-button {
-  padding-top: 15px;
+  padding-top: 12px;
   padding-left: 12px;
-  margin-top: 16px;
+  margin-top: 14px;
   color: #fd1593;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
