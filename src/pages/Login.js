@@ -23,10 +23,10 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     const data = new FormData(e.target);
     const { name, email, password } = Object.fromEntries(data.entries());
-   
-    setLoading(true);
+
     if (signup) {
       dispatch(register({ name, email, password }))
         .unwrap()

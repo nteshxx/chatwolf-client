@@ -21,6 +21,7 @@ const ChatBox = () => {
   const divRef = useRef(null);
   
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -39,6 +40,10 @@ const ChatBox = () => {
   }, [isLoggedIn, navigate]);
 
   const onSendMessage = () => {
+    if (message === '') {
+      return true;
+    }
+    setLoading(true);
     dispatch(sendMessage({ token, username, chatId, message, receiver }))
       .unwrap()
       .then((data) => {
@@ -49,6 +54,7 @@ const ChatBox = () => {
         console.log("sendMessage error");
       });
     setMessage('');
+    setLoading(false);
   };
 
   const handleKeyPress = (e) => {
@@ -99,6 +105,7 @@ const ChatBox = () => {
           onChange={(e) => setMessage(e.target.value)}
           value={message}
           onKeyPress={(e) => handleKeyPress(e)}
+          disabled={loading}
         />
         <button id="attachment-button" type="button">
           <img src={attachmentButton} alt="" />
@@ -107,6 +114,7 @@ const ChatBox = () => {
           id="send-button"
           type="button"
           onClick={() => onSendMessage()}
+          disabled={loading}
         >
           <img src={sendButton} alt="" />
         </button>
