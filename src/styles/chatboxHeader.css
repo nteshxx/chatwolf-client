@@ -1,0 +1,41 @@
+.chatbox-header {
+  width: 550px;
+  height: 50px;
+  overflow: hidden;
+  margin-top: -24px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.chatbox-image {
+  height: 40px;
+  width: 40px;
+  margin-top: 8px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.chatbox-details {
+  padding: 20px;
+}
+
+.chatbox-details h3 {
+  margin-right: 6px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 40px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.chatbox-details h5 {
+  padding-left: 4px;
+  margin-top: -8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: grey;
+  overflow: hidden;
+  cursor: default;
+}
