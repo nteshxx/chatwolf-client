@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { sendMessage, setMessages } from '../redux/chat.slice';
-
 import sendButton from '../assets/send.svg';
 import attachmentButton from '../assets/attachment.svg';
 import '../styles/messageInput.css';
 
 const MessageInput = () => {
   const { token, username } = useSelector((state) => state.auth);
-  const { receiver, chatId } = useSelector((state) => state.message);
-  const { messages } = useSelector((state) => state.chat);
+  const { messages, receiver, chatId  } = useSelector((state) => state.chat);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import avatar from '../assets/default-user.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { setReceiver, setChatId } from '../redux/message.slice';
-import { getPreviousMessages } from "../redux/chat.slice";
+import { getPreviousMessages, setReceiver, setChatId } from "../redux/chat.slice";
 import '../styles/chatcard.css';
 
 const ChatCard = (props) => {

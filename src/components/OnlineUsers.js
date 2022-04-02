@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOnlineUsers } from '../redux/user.slice';
-import { setReceiver, setChatId } from '../redux/message.slice';
-import { getPreviousMessages } from "../redux/chat.slice";
+import { getPreviousMessages, setReceiver, setChatId } from "../redux/chat.slice";
 import '../styles/onlineusers.css';
 
 const OnlineUsers = () => {

@@ -5,11 +5,8 @@ import { setMessages } from '../redux/chat.slice';
 import '../styles/messageList.css';
 
 const MessageList = () => {
-  const { socket, username, isLoggedIn } = useSelector(
-    (state) => state.auth
-  );
-  const { chatId } = useSelector((state) => state.message);
-  const { messages } = useSelector((state) => state.chat);
+  const { socket, username, isLoggedIn } = useSelector((state) => state.auth);
+  const { messages, chatId } = useSelector((state) => state.chat);
 
   const dispatch = useDispatch();
   const divRef = useRef(null);

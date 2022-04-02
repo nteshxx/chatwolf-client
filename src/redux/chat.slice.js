@@ -64,8 +64,16 @@ const chatSlice = createSlice({
     status: false,
     chats: [],
     messages: [],
+    receiver: 'Chat Wolf',
+    chatId: '',
   },
   reducers: {
+    setReceiver: (state, action) => {
+      state.receiver = action.payload
+    },
+    setChatId: (state, action) => {
+      state.chatId = action.payload
+    },
     setMessages: (state, action) => {
       state.messages = action.payload
     },
@@ -92,6 +100,6 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setMessages } = chatSlice.actions;
+export const { setMessages, setChatId, setReceiver } = chatSlice.actions;
 const { reducer } = chatSlice;
 export default reducer;
