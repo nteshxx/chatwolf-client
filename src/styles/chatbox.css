@@ -100,19 +100,23 @@
   box-shadow: 5px 5px 8px rgba(129, 86, 86, 0.1);
   display: flex;
   align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .create-message input {
   width: 476px;
   height: 36px;
   padding-left: 20px;
-  margin-right: 6px;
+  margin-right: 10px;
   border: none;
   outline: none;
   line-height: 36px;
   letter-spacing: 1px;
   border-radius: 25px;
   font-size: 14px;
+  position: absolute;
+  left: 2px
 }
 
 .create-message input:focus {
@@ -122,11 +126,27 @@
 #attachment-button {
   width: 32px;
   height: 32px;
-  padding: 6px 0 6px 6px;
+  padding: 6px;
   border: none;
   background: transparent;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 44px
 }
+
+#attachment-button img {
+  height: 100%;
+  width: 100%;
+}
+
+#attachment-button img:hover {
+  height: 24px;
+  width: 24px;
+}
+
 
 #send-button {
   width: 32px;
@@ -136,4 +156,19 @@
   margin-right: 10px;
   background: transparent;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 4px;
+}
+
+#send-button img {
+  height: 100%;
+  width: 100%;
+}
+
+#send-button img:hover {
+  width: 24px;
+  height: 24px;
 }
