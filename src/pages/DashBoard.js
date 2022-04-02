@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { ChatBox, Conversations, OnlineUsers, Search, User } from '../components';
 import { useSelector } from 'react-redux';
 import '../styles/dashboard.css';
-import ToastService from "../utils/toast.service";
 import { useNavigate } from 'react-router-dom';
 
 const DashBoard = () => {
@@ -12,7 +11,6 @@ const DashBoard = () => {
   useEffect(() => {
     if (isLoggedIn === false) {
       navigate('/');
-      ToastService.error('Login Required!');
     }
   }, [isLoggedIn, navigate]);
 

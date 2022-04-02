@@ -117,6 +117,7 @@
 #attachment-button img {
   height: 100%;
   width: 100%;
+  transition: all 100ms ease;
 }
 
 #attachment-button img:hover {
@@ -143,6 +144,7 @@
 #send-button img {
   height: 100%;
   width: 100%;
+  transition: all 100ms ease;
 }
 
 #send-button img:hover {
