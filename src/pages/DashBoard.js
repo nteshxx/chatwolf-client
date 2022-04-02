@@ -1,25 +1,20 @@
 import React, { useEffect } from 'react';
 import { ChatBox, Conversations, OnlineUsers, Search, User } from '../components';
-import { useSelector, useDispatch } from 'react-redux';
-import { getAllConversations } from "../redux/chat.slice";
+import { useSelector } from 'react-redux';
 import '../styles/dashboard.css';
+import ToastService from "../utils/toast.service";
+import { useNavigate } from 'react-router-dom';
 
 const DashBoard = () => {
-  const { token, isLoggedIn } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(getAllConversations({token}))
-        .unwrap()
-        .then(() => {
-          console.log("getAllConversation success");
-        })
-        .catch(() => {
-          console.log("getAllConversation error");
-        });
+    if (isLoggedIn === false) {
+      navigate('/');
+      ToastService.error('Login Required!');
     }
-  }, [dispatch, isLoggedIn, token]);
+  }, [isLoggedIn, navigate]);
 
   return (
     <div id="main">

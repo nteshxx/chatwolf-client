@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ChatMessage from './ChatMessage';
+import { ChatMessage, LogoutButton } from '../components';
 import user from '../assets/default-user.svg';
-import logoutButton from '../assets/logout-button.svg';
 import sendButton from '../assets/send.svg';
 import attachmentButton from '../assets/attachment.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { sendMessage, setMessages } from "../redux/chat.slice";
-import { logout } from "../redux/auth.slice";
-import ToastService from "../utils/toast.service";
 import '../styles/chatbox.css';
 
 const ChatBox = () => {
@@ -17,7 +13,6 @@ const ChatBox = () => {
   const { messages } = useSelector((state) => state.chat);
   
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const divRef = useRef(null);
   
   const [message, setMessage] = useState('');
@@ -31,13 +26,6 @@ const ChatBox = () => {
     }
     divRef.current.scrollIntoView({ behavior: 'smooth' });
   }, [chatId, dispatch, isLoggedIn, messages, socket]);
-
-  useEffect(() => {
-    if (isLoggedIn === false) {
-      navigate('/');
-      ToastService.error('Login Required!');
-    }
-  }, [isLoggedIn, navigate]);
 
   const onSendMessage = () => {
     if (message === '') {
@@ -63,24 +51,9 @@ const ChatBox = () => {
     }
   };
 
-  const onLogout = () => {
-    dispatch(logout({token}))
-      .unwrap()
-      .then((data) => {
-        console.log(data.message);
-      })
-      .catch(() => {
-        console.log("logout error chatbox");
-      });
-  };
-
   return (
     <div id="chatbox">
-      <div className="chat-buttons">
-        <button id="logout-button" type="button" onClick={() => onLogout()}>
-          <img src={logoutButton} alt="" />
-        </button>
-      </div>
+      <LogoutButton />
       <div className="chatbox-header">
         <div className="chatbox-image">
           <img src={user} alt="" />
