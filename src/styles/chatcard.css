@@ -70,6 +70,7 @@
   font-size: 12px;
   font-weight: 500;
   color: grey;
+  white-space: nowrap;
   overflow: hidden;
 }
 
