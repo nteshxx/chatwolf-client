@@ -62,6 +62,7 @@ const chatSlice = createSlice({
   name: "chat",
   initialState: {
     status: false,
+    onlineUsers: {},
     chats: [],
     messages: [],
     receiver: 'Chat Wolf',
@@ -77,6 +78,9 @@ const chatSlice = createSlice({
     setMessages: (state, action) => {
       state.messages = action.payload
     },
+    setOnlineUsers: (state, action) => {
+      state.onlineUsers = action.payload
+    }
   },
   extraReducers: {
     [getPreviousMessages.fulfilled]: (state, action) => {
@@ -100,6 +104,6 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setMessages, setChatId, setReceiver } = chatSlice.actions;
+export const { setMessages, setChatId, setReceiver, setOnlineUsers } = chatSlice.actions;
 const { reducer } = chatSlice;
 export default reducer;

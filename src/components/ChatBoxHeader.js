@@ -5,8 +5,7 @@ import wolf from '../assets/logo.svg';
 import '../styles/chatboxHeader.css';
 
 const ChatBoxHeader = () => {
-  const { receiver } = useSelector((state) => state.chat);
-  const { onlineUsers } = useSelector((state) => state.user);
+  const { receiver, onlineUsers } = useSelector((state) => state.chat);
 
   return (
     <div className="chatbox-header">

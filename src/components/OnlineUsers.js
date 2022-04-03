@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOnlineUsers } from '../redux/user.slice';
-import { getPreviousMessages, setReceiver, setChatId } from "../redux/chat.slice";
+import { setOnlineUsers, getPreviousMessages, setReceiver, setChatId } from "../redux/chat.slice";
 import '../styles/onlineusers.css';
 
 const OnlineUsers = () => {
-  const { onlineUsers } = useSelector((state) => state.user);
+  const { onlineUsers } = useSelector((state) => state.chat);
   const { socket, username, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
