@@ -46,3 +46,26 @@
   width: 642px;
   background: white;
 }
+
+/* ipad */
+@media (max-width: 1180px) {
+  #glass {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: hidden;
+  }
+}
+
+@media (max-width: 992px) {
+  
+}
+
+@media (max-width: 768px) {
+  
+}
+
+/* iphone */
+@media (max-width: 576px) {
+  
+}
+
