@@ -163,3 +163,45 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+/* ipad */
+@media (max-width: 1180px) {
+  #login-glass {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  #art-container {
+    padding: 48pxx;
+    margin-left: auto;
+  }
+
+  #login-div {
+    margin: auto;
+  }
+}
+
+@media (max-width: 992px) {
+  #art-container {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  
+}
+
+/* iphone */
+@media (max-width: 576px) {
+  #login-div {
+    margin: auto;
+  }
+
+  @media (max-width: 280px) {
+    #login-div {
+      padding: 40px 20px;
+      margin: auto;
+    }
+  }
+}
