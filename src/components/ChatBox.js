@@ -15,4 +15,4 @@ const ChatBox = () => {
   );
 };
 
-export default React.memo(ChatBox);
+export default ChatBox;

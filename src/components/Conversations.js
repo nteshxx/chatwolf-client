@@ -39,4 +39,4 @@ const Conversations = () => {
   );
 };
 
-export default React.memo(Conversations);
+export default Conversations;

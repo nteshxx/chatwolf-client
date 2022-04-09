@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { sendMessage, setMessages } from '../redux/chat.slice';
+import { setMessages } from '../redux/chat.slice';
 import sendButton from '../assets/send.svg';
 import attachmentButton from '../assets/attachment.svg';
 import '../styles/messageInput.css';
 
 const MessageInput = () => {
-  const { token, username } = useSelector((state) => state.auth);
+  const { socket, username } = useSelector((state) => state.auth);
   const { messages, receiver, chatId  } = useSelector((state) => state.chat);
-  const [message, setMessage] = useState('');
+  const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   const onSendMessage = () => {
-    if (message === '') {
+    if (text === '') {
       return true;
     }
     setLoading(true);
+    /* sending via api call
     dispatch(sendMessage({ token, username, chatId, message, receiver }))
       .unwrap()
       .then((data) => {
@@ -27,7 +28,13 @@ const MessageInput = () => {
       .catch(() => {
         console.log('sendMessage error');
       });
-    setMessage('');
+    */
+
+    // sending via socket channel
+    const data = { username, receiver, chatId, text, attachment: null };
+    socket.emit('send-new-message', data);
+    dispatch(setMessages([...messages, data]));
+    setText('');
     setLoading(false);
   };
 
@@ -44,8 +51,8 @@ const MessageInput = () => {
         placeholder="Type a new message..."
         required={true}
         autoComplete="off"
-        onChange={(e) => setMessage(e.target.value)}
-        value={message}
+        onChange={(e) => setText(e.target.value)}
+        value={text}
         onKeyPress={(e) => handleKeyPress(e)}
         disabled={loading}
       />

@@ -20,4 +20,4 @@ const ChatBoxHeader = () => {
   );
 };
 
-export default React.memo(ChatBoxHeader);
+export default ChatBoxHeader;

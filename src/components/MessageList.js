@@ -17,11 +17,14 @@ const MessageList = () => {
         dispatch(setMessages([...messages, data]));
       });
     }
+    divRef.current.scrollIntoView({ behavior: 'smooth' });
   }, [chatId, dispatch, isLoggedIn, messages, socket]);
 
+  /*
   useEffect(() => {
     divRef.current.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+  */
 
   return (
     <div className="messages-list">
@@ -30,7 +33,7 @@ const MessageList = () => {
           <Message
             key={index}
             messageType={
-              username.split('-')[1] === message.senderId ? 'sent' : 'received'
+              username.split('-')[1] === message.senderId || username === message.username ? 'sent' : 'received'
             }
             text={message.text}
             index={index}
@@ -42,4 +45,4 @@ const MessageList = () => {
   );
 };
 
-export default React.memo(MessageList);
+export default MessageList;

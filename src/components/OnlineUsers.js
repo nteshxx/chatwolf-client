@@ -52,4 +52,4 @@ const OnlineUsers = () => {
   );
 };
 
-export default React.memo(OnlineUsers);
+export default OnlineUsers;
