@@ -11,20 +11,15 @@ const MessageList = () => {
   const dispatch = useDispatch();
   const divRef = useRef(null);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      socket.on(`${chatId}`, (data) => {
-        dispatch(setMessages([...messages, data]));
-      });
-    }
-    divRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [chatId, dispatch, isLoggedIn, messages, socket]);
+  if (isLoggedIn) {
+    socket.on(`${chatId}`, (data) => {
+      dispatch(setMessages([...messages, data]));
+    });
+  }
 
-  /*
   useEffect(() => {
     divRef.current.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
-  */
 
   return (
     <div className="messages-list">
