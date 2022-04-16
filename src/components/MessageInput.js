@@ -9,6 +9,7 @@ const MessageInput = () => {
   const { socket, username, isLoggedIn } = useSelector((state) => state.auth);
   const { messages, receiver, chatId  } = useSelector((state) => state.chat);
   const [text, setText] = useState('');
+  const [media, setMedia] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -37,10 +38,11 @@ const MessageInput = () => {
     */
 
     // sending via socket channel
-    const data = { username, receiver, chatId, text, attachment: null };
+    const data = { username, receiver, chatId, text, attachment: media };
     socket.emit('send-new-message', data);
     dispatch(setMessages([...messages, data]));
     setText('');
+    setMedia(null);
     setLoading(false);
   };
 
@@ -49,6 +51,10 @@ const MessageInput = () => {
       onSendMessage();
     }
   };
+
+  const onSendFile = () => {
+    document.getElementById('attachment').click();
+  }
 
   return (
     <div className="create-message">
@@ -62,8 +68,31 @@ const MessageInput = () => {
         onKeyPress={(e) => handleKeyPress(e)}
         disabled={loading}
       />
-      <button id="attachment-button" type="button">
+      <button id="attachment-button" type="button" onClick={() => onSendFile()}>
         <img src={attachmentButton} alt="" />
+        <input 
+          style={{display: 'none'}} 
+          type="file" 
+          id="attachment" 
+          name="file"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+              setMedia({
+                image: true,
+                content: reader.result,
+                name: file.name
+              });
+              setText(file.name);
+              onSendMessage();
+            }
+            reader.onerror = (error) => {
+              console.log(error);
+            }
+          }}
+        />
       </button>
       <button
         id="send-button"

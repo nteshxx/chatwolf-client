@@ -9,6 +9,11 @@
   cursor: pointer;
 }
 
+.attached-items {
+  height: auto;
+  width: 220px;
+}
+
 .message-body h4 {
   overflow-wrap: break-word;
   font-size: 14px;

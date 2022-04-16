@@ -23,6 +23,7 @@ const MessageList = () => {
               username.split('-')[1] === message.senderId || username === message.username ? 'sent' : 'received'
             }
             text={message.text}
+            media={message.attachment}
             index={index}
           />
         );
