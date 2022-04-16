@@ -6,12 +6,18 @@ import attachmentButton from '../assets/attachment.svg';
 import '../styles/messageInput.css';
 
 const MessageInput = () => {
-  const { socket, username } = useSelector((state) => state.auth);
+  const { socket, username, isLoggedIn } = useSelector((state) => state.auth);
   const { messages, receiver, chatId  } = useSelector((state) => state.chat);
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+
+  if (isLoggedIn) {
+    socket.on(`${chatId}`, (data) => {
+      dispatch(setMessages([...messages, data]));
+    });
+  }
 
   const onSendMessage = () => {
     if (text === '') {

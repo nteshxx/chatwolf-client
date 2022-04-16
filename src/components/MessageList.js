@@ -1,24 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { Message } from '../components';
-import { useSelector, useDispatch } from 'react-redux';
-import { setMessages } from '../redux/chat.slice';
+import { useSelector } from 'react-redux';
 import '../styles/messageList.css';
 
 const MessageList = () => {
-  const { socket, username, isLoggedIn } = useSelector((state) => state.auth);
-  const { messages, chatId } = useSelector((state) => state.chat);
+  const { username } = useSelector((state) => state.auth);
+  const { messages } = useSelector((state) => state.chat);
 
-  const dispatch = useDispatch();
   const divRef = useRef(null);
 
-  if (isLoggedIn) {
-    socket.on(`${chatId}`, (data) => {
-      dispatch(setMessages([...messages, data]));
-    });
-  }
-
   useEffect(() => {
-    divRef.current.scrollIntoView({ behavior: 'smooth' });
+    divRef.current.scrollIntoView();
   }, [messages]);
 
   return (
