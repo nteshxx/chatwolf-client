@@ -43,6 +43,16 @@
 .chat-card-image {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.chat-card-image img {
+  width: auto;
+  max-height: 100%;
 }
 
 .chat-card-details {

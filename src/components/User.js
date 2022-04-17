@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { uploadAvatar } from "../redux/auth.slice";
 import Compressor from 'compressorjs';
 import userImage from '../assets/default-user.svg';
 import '../styles/user.css';
 
 const User = () => {
-  const { username } = useSelector((state) => state.auth);
-  const [avatar, setAvatar] = useState(userImage);
+  const { username, avatar, token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   
   const onUpdateAvatar = () => {
     document.getElementById('upload-avatar').click();
@@ -15,7 +16,7 @@ const User = () => {
   return (
     <div id="user">
       <div className="user-img" onClick={() => onUpdateAvatar()}>
-        <img src={avatar} alt="" />
+        <img src={avatar ? avatar : userImage} alt="" />
         <input
           style={{ display: 'none' }}
           type="file"
@@ -33,7 +34,17 @@ const User = () => {
                 const reader = new FileReader();
                 reader.readAsDataURL(result);
                 reader.onload = () => {
-                  setAvatar(reader.result);
+                  // setAvatar(reader.result);
+                  dispatch(uploadAvatar({ dataUrl: reader.result, token }))
+                    .unwrap()
+                    .then((data) => {
+                      let loggedInUser = JSON.parse(localStorage.getItem('user'));
+                      loggedInUser.user.avatar = data.updatedAvatar;
+                      localStorage.setItem('user', JSON.stringify(loggedInUser));
+                  })
+                  .catch(() => {
+                    console.log('update avatar error');
+                  });
                 };
                 reader.onerror = (error) => {
                   console.log(error);

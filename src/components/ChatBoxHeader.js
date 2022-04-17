@@ -5,12 +5,12 @@ import wolf from '../assets/logo.svg';
 import '../styles/chatboxHeader.css';
 
 const ChatBoxHeader = () => {
-  const { receiver, onlineUsers } = useSelector((state) => state.chat);
+  const { receiver, receiverAvatar, onlineUsers } = useSelector((state) => state.chat);
 
   return (
     <div className="chatbox-header">
       <div className="chatbox-image">
-        <img src={receiver === 'Chat Wolf' ? wolf : user} alt="" />
+        <img src={receiver === 'Chat Wolf' ? wolf : receiverAvatar ? receiverAvatar : user} alt="" />
       </div>
       <div className="chatbox-details">
         <h3>{receiver.split('-')[0]}</h3>

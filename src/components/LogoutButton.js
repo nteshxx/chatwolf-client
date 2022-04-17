@@ -12,6 +12,7 @@ const LogoutButton = () => {
 
   const onLogout = () => {
     setLoading(true);
+    localStorage.removeItem('user');
     dispatch(logout({ token }))
       .unwrap()
       .then((data) => {

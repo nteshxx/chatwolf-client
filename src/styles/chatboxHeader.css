@@ -13,8 +13,18 @@
   width: 40px;
   margin-top: 8px;
   overflow: hidden;
+  border-radius: 50%;
   cursor: pointer;
+  border: 1px solid transparent;
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
+
+.chatbox-image img {
+  width: auto;
+  max-height: 100%;
+}
+
 
 .chatbox-details {
   padding: 20px;

@@ -40,10 +40,21 @@ const logout = async (token) => {
   return response.data;
 };
 
+const updateAvatar = async (dataUrl, token) => {
+  const response = await axios.put(`${REACT_APP_API}/auth/upload-avatar`, { dataUrl }, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  return response.data;
+};
+
 const authService = {
   register,
   login,
   logout,
+  updateAvatar,
 };
 
 export default authService;

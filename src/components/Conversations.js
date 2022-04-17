@@ -30,6 +30,7 @@ const Conversations = () => {
             key={chat._id}
             chatId={chat._id}
             userId={`${chat.name}-${chat.userid}`}
+            avatar={chat.avatar}
             text={chat.text}
             timeStamp={chat.timeStamp}
             total={chat.numberOfMessages}
