@@ -53,7 +53,7 @@ const MessageInput = () => {
     }
   };
 
-  const onSendFile = () => {
+  const onAttachFile = () => {
     document.getElementById('attachment').click();
   };
 
@@ -69,7 +69,7 @@ const MessageInput = () => {
         onKeyPress={(e) => handleKeyPress(e)}
         disabled={loading}
       />
-      <button id="attachment-button" type="button" onClick={() => onSendFile()}>
+      <button id="attachment-button" type="button" onClick={() => onAttachFile()}>
         <img src={attachmentButton} alt="" />
         <input
           style={{ display: 'none' }}
