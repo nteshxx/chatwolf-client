@@ -3,7 +3,7 @@ import ToastService from "../utils/toast.service";
 import AuthService from "../services/auth.service";
 import io from 'socket.io-client';
 
-const { REACT_APP_API } = process.env;
+const { CHAT_API } = process.env;
 
 const data = JSON.parse(localStorage.getItem("user"));
 
@@ -90,7 +90,7 @@ export const logout = createAsyncThunk(
 );
 
 const connect = (data) => {
-  const socketConnection = io.connect(`${REACT_APP_API}`, {
+  const socketConnection = io.connect(`${CHAT_API}`, {
     query: data.accessToken
   });
   socketConnection.emit('new-online-user', `${data.user.name}-${data.user._id}`);

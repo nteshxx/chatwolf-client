@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const { REACT_APP_API } = process.env;
+const { CHAT_API } = process.env;
 
 const getPreviousMessages = async (chatId, token) => {
-  const response = await axios.post(`${REACT_APP_API}/chat/get-messages`, { chatId }, {
+  const response = await axios.post(`${CHAT_API}/chat/get-messages`, { chatId }, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -13,7 +13,7 @@ const getPreviousMessages = async (chatId, token) => {
 };
 
 const getAllChats = async (token) => {
-  const response = await axios.get(`${REACT_APP_API}/chat/all-chats`, {
+  const response = await axios.get(`${CHAT_API}/chat/all-chats`, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -23,7 +23,7 @@ const getAllChats = async (token) => {
 };
 
 const sendMessage = async (token, username, chatId, message, receiver) => {
-  const response = await axios.post(`${REACT_APP_API}/chat/send-message`, {
+  const response = await axios.post(`${CHAT_API}/chat/send-message`, {
     senderId: await username.split('-')[1],
     receiverId: await receiver.split('-')[1],
     chatId: chatId,

@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const { REACT_APP_API } = process.env;
+const { CHAT_API } = process.env;
 
 const register = async (name, email, password) => {
-  const response = await axios.post(`${REACT_APP_API}/auth/register`, {
+  const response = await axios.post(`${CHAT_API}/auth/register`, {
     name,
     email,
     password,
@@ -16,7 +16,7 @@ const register = async (name, email, password) => {
 };
 
 const login = async (email, password) => {
-  const response = await axios.post(`${REACT_APP_API}/auth/login`, {
+  const response = await axios.post(`${CHAT_API}/auth/login`, {
     email,
     password,
   });
@@ -29,7 +29,7 @@ const login = async (email, password) => {
 
 const logout = async (token) => {
   const response = await axios.get(
-    `${REACT_APP_API}/auth/logout`,
+    `${CHAT_API}/auth/logout`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -41,7 +41,7 @@ const logout = async (token) => {
 };
 
 const updateAvatar = async (dataUrl, token) => {
-  const response = await axios.put(`${REACT_APP_API}/auth/upload-avatar`, { dataUrl }, {
+  const response = await axios.put(`${CHAT_API}/auth/upload-avatar`, { dataUrl }, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
