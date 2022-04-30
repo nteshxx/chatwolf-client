@@ -84,6 +84,9 @@ const chatSlice = createSlice({
     },
     setOnlineUsers: (state, action) => {
       state.onlineUsers = action.payload
+    },
+    setChats: (state, action) => {
+      state.chats = action.payload
     }
   },
   extraReducers: {
@@ -108,6 +111,6 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setMessages, setChatId, setReceiver, setReceiverAvatar, setOnlineUsers } = chatSlice.actions;
+export const { setMessages, setChatId, setReceiver, setReceiverAvatar, setOnlineUsers, setChats } = chatSlice.actions;
 const { reducer } = chatSlice;
 export default reducer;

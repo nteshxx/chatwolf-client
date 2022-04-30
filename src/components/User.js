@@ -26,7 +26,7 @@ const User = () => {
           onChange={(e) => {
             const file = e.target.files[0];
             new Compressor(file, {
-              quality: 0.6,
+              quality: 0.2,
 
               // The compression process is asynchronous,
               // which means you have to access the `result` in the `success` hook function.
