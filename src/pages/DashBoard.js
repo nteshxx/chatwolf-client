@@ -36,4 +36,4 @@ const DashBoard = () => {
   );
 };
 
-export default React.memo(DashBoard);
+export default DashBoard;

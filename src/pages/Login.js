@@ -97,4 +97,4 @@ const Login = () => {
   );
 };
 
-export default React.memo(Login);
+export default Login;

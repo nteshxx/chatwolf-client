@@ -151,4 +151,4 @@ const MessageInput = () => {
   );
 };
 
-export default React.memo(MessageInput);
+export default MessageInput;
