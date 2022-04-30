@@ -14,8 +14,6 @@ const ChatCard = (props) => {
 
   const selectCard = (chatid, user, userAvatar) => {
     dispatch(setChatId(chatid));
-    dispatch(setReceiver(user));
-    dispatch(setReceiverAvatar(userAvatar));
     dispatch(getPreviousMessages({ chatid, token }))
       .unwrap()
       .then(() => {
@@ -24,6 +22,8 @@ const ChatCard = (props) => {
       .catch(() => {
         console.log("getPreviousMessages error");
       });
+    dispatch(setReceiver(user));
+    dispatch(setReceiverAvatar(userAvatar));
   };
 
   return (

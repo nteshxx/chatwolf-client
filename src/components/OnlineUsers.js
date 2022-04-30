@@ -42,7 +42,7 @@ const OnlineUsers = () => {
               {user === username || (
                 <li key={index} onClick={() => selectOnlineUser(user)}>
                   <div className="online-user">{user.split('-')[0]}</div>
-                  <div className="new-message-count">{index}</div>
+                  {/*<div className="new-message-count">{index}</div>*/}
                 </li>
               )}
             </div>
