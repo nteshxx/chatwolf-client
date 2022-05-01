@@ -11,7 +11,7 @@ const OnlineUsers = () => {
   useEffect(() => {
     try {
       // retrieve all the online users
-      socket.on('all-online-users', (users) => {
+      socket.off('all-online-users').on('all-online-users', (users) => {
         dispatch(setOnlineUsers(users));
       });
     } catch {};
