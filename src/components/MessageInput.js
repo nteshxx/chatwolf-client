@@ -25,9 +25,17 @@ const MessageInput = () => {
         // update chat conversations
         let tempChats = JSON.parse(JSON.stringify(chats));
         const chatIndex = tempChats.findIndex((obj) => obj._id === data.chatId);
-        tempChats[chatIndex].text = data.text;
-        tempChats[chatIndex].timeStamp = new Date().toISOString();
-        tempChats[chatIndex].numberOfMessages += 1;
+        if (chatIndex === -1) {
+          tempChats[chatIndex + 1].chatId = data.chatId;
+          tempChats[chatIndex + 1].userId = data.receiver;
+          tempChats[chatIndex + 1].text = data.text;
+          tempChats[chatIndex + 1].timeStamp = new Date().toISOString();
+          tempChats[chatIndex + 1].numberOfMessages = 1;
+        } else {
+          tempChats[chatIndex].text = data.text;
+          tempChats[chatIndex].timeStamp = new Date().toISOString();
+          tempChats[chatIndex].numberOfMessages += 1;
+        }
 
         // sorting chats: latest on top
         dispatch(setChats(tempChats.sort((x, y) => {
@@ -68,10 +76,18 @@ const MessageInput = () => {
     // update chat conversations
     let tempChats = JSON.parse(JSON.stringify(chats));
     const chatIndex = tempChats.findIndex((obj) => obj._id === chatId);
-    tempChats[chatIndex].text = text;
-    tempChats[chatIndex].timeStamp = new Date().toISOString();
-    tempChats[chatIndex].numberOfMessages += 1;
-
+    if (chatIndex === -1) {
+      tempChats[chatIndex + 1].chatId = chatId;
+      tempChats[chatIndex + 1].userId = receiver;
+      tempChats[chatIndex + 1].text = text;
+      tempChats[chatIndex + 1].timeStamp = new Date().toISOString();
+      tempChats[chatIndex + 1].numberOfMessages = 1;
+    } else {
+      tempChats[chatIndex].text = text;
+      tempChats[chatIndex].timeStamp = new Date().toISOString();
+      tempChats[chatIndex].numberOfMessages += 1;
+    }
+    
     // sorting chats: latest on top
     dispatch(
       setChats(
