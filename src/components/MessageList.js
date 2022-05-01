@@ -10,7 +10,7 @@ const MessageList = () => {
   const divRef = useRef(null);
 
   useEffect(() => {
-    divRef.current.scrollIntoView();
+    divRef.current.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   return (
