@@ -16,31 +16,32 @@ const MessageInput = () => {
   const dispatch = useDispatch();
 
   if (isLoggedIn) {
-    socket.on('new-message', (data) => {
+    socket.off('new-message').on('new-message', (data) => {
       if (chatId === data.chatId) {
         dispatch(setMessages([...messages, data]));
       }
-  
+      
       if (chats.length !== 0) {
         // update chat conversations
         let tempChats = JSON.parse(JSON.stringify(chats));
-        const chatIndex = tempChats.findIndex((obj => obj._id === data.chatId));
+        const chatIndex = tempChats.findIndex((obj) => obj._id === data.chatId);
         tempChats[chatIndex].text = data.text;
         tempChats[chatIndex].timeStamp = new Date().toISOString();
         tempChats[chatIndex].numberOfMessages += 1;
-    
+
         // sorting chats: latest on top
         dispatch(setChats(tempChats.sort((x, y) => {
-          let m = new Date(x.timeStamp).getTime();
-          let n = new Date(y.timeStamp).getTime();
-          return n - m;
-        })));
+              let m = new Date(x.timeStamp).getTime();
+              let n = new Date(y.timeStamp).getTime();
+              return n - m;
+            })));
       }
     });
   }
 
   const onSendMessage = () => {
     if (text === '' || chatId === '') {
+      setText('');
       return true;
     }
     setLoading(true);
@@ -63,20 +64,24 @@ const MessageInput = () => {
     setText('');
     setMedia(null);
     setLoading(false);
-    
+
     // update chat conversations
     let tempChats = JSON.parse(JSON.stringify(chats));
-    const chatIndex = tempChats.findIndex((obj => obj._id === chatId));
+    const chatIndex = tempChats.findIndex((obj) => obj._id === chatId);
     tempChats[chatIndex].text = text;
     tempChats[chatIndex].timeStamp = new Date().toISOString();
     tempChats[chatIndex].numberOfMessages += 1;
-    
+
     // sorting chats: latest on top
-    dispatch(setChats(tempChats.sort((x, y) => {
-      let m = new Date(x.timeStamp).getTime();
-      let n = new Date(y.timeStamp).getTime();
-      return n - m;
-    })));
+    dispatch(
+      setChats(
+        tempChats.sort((x, y) => {
+          let m = new Date(x.timeStamp).getTime();
+          let n = new Date(y.timeStamp).getTime();
+          return n - m;
+        })
+      )
+    );
   };
 
   const handleKeyPress = (e) => {
@@ -101,7 +106,11 @@ const MessageInput = () => {
         onKeyPress={(e) => handleKeyPress(e)}
         disabled={loading}
       />
-      <button id="attachment-button" type="button" onClick={() => onAttachFile()}>
+      <button
+        id="attachment-button"
+        type="button"
+        onClick={() => onAttachFile()}
+      >
         <img src={attachmentButton} alt="" />
         <input
           style={{ display: 'none' }}
@@ -151,4 +160,4 @@ const MessageInput = () => {
   );
 };
 
-export default MessageInput;
+export default React.memo(MessageInput);
