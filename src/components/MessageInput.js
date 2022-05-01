@@ -20,30 +20,40 @@ const MessageInput = () => {
       if (chatId === data.chatId) {
         dispatch(setMessages([...messages, data]));
       }
-      
-      if (chats.length !== 0) {
-        // update chat conversations
-        let tempChats = JSON.parse(JSON.stringify(chats));
-        const chatIndex = tempChats.findIndex((obj) => obj._id === data.chatId);
-        if (chatIndex === -1) {
-          tempChats[chatIndex + 1].chatId = data.chatId;
-          tempChats[chatIndex + 1].userId = data.receiver;
-          tempChats[chatIndex + 1].text = data.text;
-          tempChats[chatIndex + 1].timeStamp = new Date().toISOString();
-          tempChats[chatIndex + 1].numberOfMessages = 1;
-        } else {
-          tempChats[chatIndex].text = data.text;
-          tempChats[chatIndex].timeStamp = new Date().toISOString();
-          tempChats[chatIndex].numberOfMessages += 1;
-        }
 
-        // sorting chats: latest on top
-        dispatch(setChats(tempChats.sort((x, y) => {
-              let m = new Date(x.timeStamp).getTime();
-              let n = new Date(y.timeStamp).getTime();
-              return n - m;
-            })));
+      // update chat conversations
+      let tempChats = JSON.parse(JSON.stringify(chats));
+      const chatIndex = tempChats.findIndex((obj) => obj._id === data.chatId);
+      if (chatIndex === -1) {
+        tempChats[tempChats.length] = {
+          avatar: null,
+          name: data.username.split('-')[0],
+          text: data.text,
+          timeStamp: new Date().toISOString(),
+          userid: data.username.split('-')[1],
+          _id: data.chatId,
+          unseenMessages: 1,
+        };
+      } else {
+        tempChats[chatIndex].text = data.text;
+        tempChats[chatIndex].timeStamp = new Date().toISOString();
+        if (tempChats[chatIndex].hasOwnProperty('unseenMessages') && chatId !== data.chatId) {
+          tempChats[chatIndex].unseenMessages += 1;
+        } else if (!tempChats[chatIndex].hasOwnProperty('unseenMessages') && chatId !== data.chatId) {
+          tempChats[chatIndex].unseenMessages = 1;
+        }
       }
+
+      // sorting chats: latest on top
+      dispatch(
+        setChats(
+          tempChats.sort((x, y) => {
+            let m = new Date(x.timeStamp).getTime();
+            let n = new Date(y.timeStamp).getTime();
+            return n - m;
+          })
+        )
+      );
     });
   }
 
@@ -77,17 +87,21 @@ const MessageInput = () => {
     let tempChats = JSON.parse(JSON.stringify(chats));
     const chatIndex = tempChats.findIndex((obj) => obj._id === chatId);
     if (chatIndex === -1) {
-      tempChats[chatIndex + 1].chatId = chatId;
-      tempChats[chatIndex + 1].userId = receiver;
-      tempChats[chatIndex + 1].text = text;
-      tempChats[chatIndex + 1].timeStamp = new Date().toISOString();
-      tempChats[chatIndex + 1].numberOfMessages = 1;
+      tempChats[tempChats.length] = {
+        avatar: null,
+        name: receiver.split('-')[0],
+        text: text,
+        timeStamp: new Date().toISOString(),
+        userid: receiver.split('-')[1],
+        _id: chatId,
+        unseenMessages: 0,
+      };
     } else {
       tempChats[chatIndex].text = text;
       tempChats[chatIndex].timeStamp = new Date().toISOString();
-      tempChats[chatIndex].numberOfMessages += 1;
+      tempChats[chatIndex].unseenMessages = 0;
     }
-    
+
     // sorting chats: latest on top
     dispatch(
       setChats(

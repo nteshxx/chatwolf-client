@@ -33,7 +33,7 @@ const Conversations = () => {
             avatar={chat.avatar}
             text={chat.text}
             timeStamp={chat.timeStamp}
-            total={chat.numberOfMessages}
+            unseenCount={chat.unseenMessages}
           />
         ))}
     </div>

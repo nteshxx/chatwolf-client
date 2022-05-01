@@ -5,7 +5,7 @@ import { getPreviousMessages, setReceiver, setReceiverAvatar, setChatId } from "
 import '../styles/chatcard.css';
 
 const ChatCard = (props) => {
-  const { chatId, userId, avatar, text, timeStamp, total } = props
+  const { chatId, userId, avatar, text, timeStamp, unseenCount } = props
   let time = new Date(timeStamp).toDateString().split(' ');
   time = `${time[1]} ${time[2]}`;
 
@@ -37,7 +37,7 @@ const ChatCard = (props) => {
       </div>
       <div className="date-notification">
         <h5 className="date">{time}</h5>
-        <h5 className="unseen">{total}</h5>
+        {unseenCount ? <h5 className="unseen">{unseenCount}</h5> : <div></div>}
       </div>
     </div>
   );
