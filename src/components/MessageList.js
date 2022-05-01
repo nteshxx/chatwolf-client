@@ -33,4 +33,4 @@ const MessageList = () => {
   );
 };
 
-export default React.memo(MessageList);
+export default MessageList;
