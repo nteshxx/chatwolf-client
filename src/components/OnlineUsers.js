@@ -1,21 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOnlineUsers, getPreviousMessages, setReceiver, setChatId } from "../redux/chat.slice";
 import '../styles/onlineusers.css';
 
 const OnlineUsers = () => {
   const { onlineUsers } = useSelector((state) => state.chat);
-  const { socket, username, token } = useSelector((state) => state.auth);
+  const { socket, username, token, isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    try {
-      // retrieve all the online users
-      socket.off('all-online-users').on('all-online-users', (users) => {
-        dispatch(setOnlineUsers(users));
-      });
-    } catch {};
-  }, [dispatch, socket]);
+    
+  if (isLoggedIn) {
+    // retrieve all the online users
+    socket.off('all-online-users').on('all-online-users', (users) => {
+      dispatch(setOnlineUsers(users));
+    });
+  }
 
   const selectOnlineUser = (user) => {
     const participants = [username, user].sort().map((user) => user.split('-')[1]);
