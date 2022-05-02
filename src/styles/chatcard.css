@@ -57,7 +57,7 @@
 
 .chat-card-details {
   height: 40px;
-  width: 160px;
+  width: 150px;
   margin-left: 16px;
   margin-right: 10px;
   align-items: center;
@@ -86,6 +86,7 @@
 
 .date-notification {
   line-height: 30px;
+  min-width: 3rem;
 }
 
 .date {
@@ -93,6 +94,7 @@
   font-size: 12px;
   font-weight: 500;
   white-space: nowrap;
+  text-align: right;
 }
 
 .unseen {

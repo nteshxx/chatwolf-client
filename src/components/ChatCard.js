@@ -6,8 +6,26 @@ import '../styles/chatcard.css';
 
 const ChatCard = (props) => {
   const { chatId, userId, avatar, text, timeStamp, unseenCount } = props
-  let time = new Date(timeStamp).toDateString().split(' ');
-  time = `${time[1]} ${time[2]}`;
+  
+  const lastMessageTime = new Date(timeStamp);
+  const currentTime = new Date();
+  const millisecondsPerDay = 1000 * 60 * 60 * 24;
+  const millisBetween = currentTime.getTime() - lastMessageTime.getTime();
+  const days = Math.floor(millisBetween / millisecondsPerDay);
+
+  let time = '';
+
+  if (days === 0) {
+    // show time
+    time = lastMessageTime.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+  } else if (days === 1) {
+    // show Yesterday
+    time = "Yesterday"
+  } else {
+    // show date month
+    let timeArray = lastMessageTime.toLocaleString('en-US').split(',')[0];
+    time = `${timeArray[1]} ${timeArray[2]}`;
+  }
 
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
