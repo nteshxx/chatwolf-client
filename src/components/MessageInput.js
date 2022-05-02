@@ -59,7 +59,6 @@ const MessageInput = () => {
 
   const onSendMessage = () => {
     if (text === '' || chatId === '') {
-      setText('');
       return true;
     }
     setLoading(true);
