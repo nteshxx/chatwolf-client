@@ -1,11 +1,11 @@
 import React from 'react';
 import defaultAvatar from '../assets/default-user.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPreviousMessages, setReceiver, setReceiverAvatar, setChatId } from "../redux/chat.slice";
+import { getPreviousMessages, setReceiver, setReceiverAvatar, setChatId, setChats } from "../redux/chat.slice";
 import '../styles/chatcard.css';
 
 const ChatCard = (props) => {
-  const { chatId, userId, avatar, text, timeStamp, unseenCount } = props
+  const { chatId, userId, avatar, text, timeStamp, unseenCount } = props;
   
   const lastMessageTime = new Date(timeStamp);
   const currentTime = new Date();
@@ -28,9 +28,17 @@ const ChatCard = (props) => {
   }
 
   const { token } = useSelector((state) => state.auth);
+  const { chats } = useSelector((state) => state.chat);
   const dispatch = useDispatch();
 
   const selectCard = (chatid, user, userAvatar) => {
+    // set unseen messages to zero
+    let tempChats = JSON.parse(JSON.stringify(chats));
+    const chatIndex = tempChats.findIndex((obj) => obj._id === chatId);
+    if (chatIndex !== -1) {
+      tempChats[chatIndex].unseenMessages = 0;
+      dispatch(setChats(tempChats));
+    }
     dispatch(setChatId(chatid));
     dispatch(getPreviousMessages({ chatid, token }))
       .unwrap()
