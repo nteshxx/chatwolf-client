@@ -1,18 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from './pages/Login';
-import DashBoard from './pages/DashBoard';
-import PageNotFound from './pages/PageNotFound';
+import { About, DashBoard, Home, Login, PageNotFound } from './pages';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Home from './pages/Home';
 
 const Routing = () => {
   return (
     <Routes>
-      <Route exact path="/" element={<Login />} />
-      <Route exact path="/home" element={<Home />} />
+      <Route exact path="/" element={<Home />} />
+      <Route exact path="/login" element={<Login />} />
       <Route exact path="/dashboard" element={<DashBoard />}></Route>
+      <Route exact path="/about" element={<About />}></Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
