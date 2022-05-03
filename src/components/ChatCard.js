@@ -22,9 +22,9 @@ const ChatCard = (props) => {
     // show Yesterday
     time = "Yesterday"
   } else {
-    // show date month
-    let timeArray = lastMessageTime.toLocaleString('en-US').split(',')[0];
-    time = `${timeArray[1]} ${timeArray[2]}`;
+    // show date/month/year
+    time = lastMessageTime.toLocaleString('en-US').split(',')[0];
+    time = `${time.split('/')[1]}/${time.split('/')[0]}/${time.split('/')[2]}`;
   }
 
   const { token } = useSelector((state) => state.auth);
