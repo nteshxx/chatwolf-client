@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login, register } from '../redux/auth.slice';
 import { FormInput } from '../components';
-import { motion } from 'framer-motion/dist/framer-motion';
 import art from '../assets/unlock.svg';
 import logo from '../assets/logo.svg';
 import '../styles/login.css';
@@ -49,99 +48,83 @@ const Login = () => {
     }
   };
 
-  const fadeRight = {
-    hidden: { opacity: 0, x: 100 },
-    visible: { opacity: 1, x: 0 },
-  };
-
   return (
     <div id="main">
-      <motion.p
-        variants={fadeRight}
-        initial="hidden"
-        animate="visible"
-        transition={{ duration: 1 }}
-      >
-        <div id="login-glass">
-          <div id="art-container">
-            <h3>
-              Unlock!
-              <br />
-              <span>the secret land of Messaging.</span>
-            </h3>
-            <img src={art} alt="" />
-          </div>
-          <div id="login-div">
-            <h2 className="login-logo">
-              <img src={logo} alt="" />
-              Chat<span>Wolf</span>
-            </h2>
-            <form onSubmit={handleSubmit}>
-              {signup && (
-                <FormInput
-                  type="text"
-                  placeholder="Name"
-                  name="name"
-                  autoComplete="off"
-                  pattern="^[A-Za-z ,.']{3,20}$"
-                />
-              )}
-              <FormInput
-                type="email"
-                placeholder="Email"
-                name="email"
-                autoComplete="on"
-                pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-              />
-              <FormInput
-                type="password"
-                placeholder="Password"
-                name="password"
-                autoComplete="on"
-                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$#!%*?&])[A-Za-z\d@$#!%*?&]{8,25}$"
-              />
-              <button type="submit" id="signin-button" disabled={loading}>
-                {signup ? (
-                  <div>
-                    {loading ? (
-                      <div className="loader"></div>
-                    ) : (
-                      <div>Sign Up</div>
-                    )}
-                  </div>
-                ) : (
-                  <div>
-                    {loading ? (
-                      <div className="loader"></div>
-                    ) : (
-                      <div>Log In</div>
-                    )}
-                  </div>
-                )}
-              </button>
-              {signup || <p className="forgot-password">Forgot Password?</p>}
-              {signup || (
-                <button
-                  type="button"
-                  id="signup-button"
-                  onClick={() => setSignup(!signup)}
-                >
-                  Sign Up
-                </button>
-              )}
-              {signup && (
-                <button
-                  type="button"
-                  id="signup-button"
-                  onClick={() => setSignup(!signup)}
-                >
-                  Log In
-                </button>
-              )}
-            </form>
-          </div>
+      <div id="login-glass">
+        <div id="art-container">
+          <h3>
+            Unlock!
+            <br />
+            <span>the secret land of Messaging.</span>
+          </h3>
+          <img src={art} alt="" />
         </div>
-      </motion.p>
+        <div id="login-div">
+          <h2 className="login-logo">
+            <img src={logo} alt="" />
+            Chat<span>Wolf</span>
+          </h2>
+          <form onSubmit={handleSubmit}>
+            {signup && (
+              <FormInput
+                type="text"
+                placeholder="Name"
+                name="name"
+                autoComplete="off"
+                pattern="^[A-Za-z ,.']{3,20}$"
+              />
+            )}
+            <FormInput
+              type="email"
+              placeholder="Email"
+              name="email"
+              autoComplete="on"
+              pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            />
+            <FormInput
+              type="password"
+              placeholder="Password"
+              name="password"
+              autoComplete="on"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$#!%*?&])[A-Za-z\d@$#!%*?&]{8,25}$"
+            />
+            <button type="submit" id="signin-button" disabled={loading}>
+              {signup ? (
+                <div>
+                  {loading ? (
+                    <div className="loader"></div>
+                  ) : (
+                    <div>Sign Up</div>
+                  )}
+                </div>
+              ) : (
+                <div>
+                  {loading ? <div className="loader"></div> : <div>Log In</div>}
+                </div>
+              )}
+            </button>
+            {signup || <p className="forgot-password">Forgot Password?</p>}
+            {signup || (
+              <button
+                type="button"
+                id="signup-button"
+                onClick={() => setSignup(!signup)}
+              >
+                Sign Up
+              </button>
+            )}
+            {signup && (
+              <button
+                type="button"
+                id="signup-button"
+                onClick={() => setSignup(!signup)}
+              >
+                Log In
+              </button>
+            )}
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

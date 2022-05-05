@@ -7,26 +7,27 @@ const PageNotFound = () => {
     <div
       style={{
         display: 'flex',
+        flexDirection: 'column-reverse',
         alignItems: 'center',
         justifyContent: 'center',
         height: '100vh',
+        width: '100vw'
       }}
     >
-      <div style={{ margin: 'auto' }}>
-        <img style={{ height: '60vh', margin: 'auto' }} src={FOUR04} alt="" />
+      <div style={{ height: '100%', width: '100%' }}>
+        <img style={{ height: '100%', width: '100%', margin: 'auto' }} src={FOUR04} alt="" />
       </div>
       <Link
         to="/"
         style={{
           position: 'absolute',
-          top: '80%',
           textDecoration: 'none',
-          fontSize: '24px',
+          fontSize: '2rem',
           fontWeight: '600',
           color: 'black'
         }}
       >
-        Go Back
+        HOME
       </Link>
     </div>
   );
