@@ -11,6 +11,7 @@ const Section = styled.section`
   justify-content: center;
   align-items: center;
   background: black;
+  overflow: hidden;
 `;
 
 const Container = styled.div`
