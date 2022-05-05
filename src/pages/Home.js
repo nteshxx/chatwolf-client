@@ -2,46 +2,68 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion/dist/framer-motion';
 import { Link } from 'react-router-dom';
-import PlanetOne from '../assets/planet.svg';
-import PlanetTwo from '../assets/planet-2.svg';
-import PlanetThree from '../assets/planet-3.svg';
-import PlanetFour from '../assets/planet-4.svg';
+import Planet from '../assets/planet.svg';
 
 const Section = styled.section`
   height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+  background: black;
 `;
 
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 100vh;
-  padding: 3rem calc((100vw - 1300px) / 2);
+  @media screen and (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
   @media screen and (max-width: 768px) {
-    grid-grid-template-columns: 1fr;
+
+  }
+  @media screen and (max-width: 576px) {
+    
+  }
+  @media screen and (max-width: 280px) {
   }
 `;
 
 const ColumnLeft = styled.div`
   display: flex;
-  color: #fff;
+  color: white;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 5rem 2rem;
+  padding: 0 7rem;
   h1 {
     margin-bottom: 0.5rem;
-    font-size: 2rem;
-    color: black;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: white;
   }
   p {
-    margin: 2rem 0;
+    margin: 3rem 0;
     font-size: 4rem;
-    line-height: 1.4;
-    color: black;
+    font-weight: 300;
+    line-height: 1.5;
+    color: white;
+  }
+  @media screen and (max-width: 576px) {
+    padding: 0 3rem;
+    align-items: center;
+    h1 {
+      margin-bottom: 0;
+      font-size: 1.4rem;
+    }
+    p {
+      margin: 1rem 0;
+      font-size: 3rem;
+    }
+  }
+  @media screen and (max-width: 280px) {
+    padding: 0rem 1rem;
   }
 `;
 
@@ -49,7 +71,7 @@ const Button = styled(motion.button)`
   margin-top: 2rem;
   padding: 1rem 3rem;
   font-size: 1rem;
-  border: 2px solid black;
+  border: 2px solid white;
   border-radius: 4px;
   outline: none;
   cursor: pointer;
@@ -62,8 +84,16 @@ const Image = styled(motion.img)`
   position: absolute;
   width: 100%;
   height: 100%;
-  max-width: 210px;
-  max-height: 210px;
+  max-width: 360px;
+  max-height: 360px;
+  @media screen and (max-width: 768px) {
+    min-width: 300px;
+    min-height: 300px;
+  }
+  @media screen and (max-width: 576px) {
+    min-width: 150px;
+    min-height: 150px;
+  }
 `;
 
 const ColumnRight = styled.div`
@@ -73,27 +103,34 @@ const ColumnRight = styled.div`
   padding: 2rem;
   position: relative;
   ${Image}:nth-child(1) {
-    top: 10px;
-    left: 40px;
+    top: 25%;
+    left: 20%;
   }
-  ${Image}:nth-child(2) {
-    top: 170px;
-    right: 10px;
+  @media screen and (max-width: 992px) {
+    grid-column: 1;
+    grid-row: 1;
+    ${Image}:nth-child(1) {
+      top: 20%;
+      left: 20%;
+    }
   }
-  ${Image}:nth-child(3) {
-    top: 350px;
-    left: 50px;
+  @media screen and (max-width: 768px) {
   }
-  ${Image}:nth-child(4) {
-    bottom: 100px;
-    right: 75px;
+  @media screen and (max-width: 576px) {
+    ${Image}:nth-child(1) {
+      top: 20%;
+      left: 0%;
+    }
+  }
+  @media screen and (max-width: 280px) {
+    padding: 1rem;
   }
 `;
 
 const Home = () => {
   const fadeLeft = {
     hidden: { opacity: 0, x: -100 },
-    visible: { opacity: 1, x: 0 }
+    visible: { opacity: 1, x: 0 },
   };
 
   return (
@@ -109,70 +146,43 @@ const Home = () => {
           </motion.h1>
           <motion.p
             variants={fadeLeft}
-            initial='hidden'
-            animate='visible'
+            initial="hidden"
+            animate="visible"
             transition={{ duration: 1 }}
           >
-            A Journey to Land of Messaging
+            Designed For You!
           </motion.p>
 
-          <Link to='/login'>
-          <Button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{
-              scale: 0.95,
-              backgroundColor: '#67F6E7',
-              border: 'none',
-              color: '#000'
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: 1.5 } }}
-          >
-            Get Started
-          </Button>
+          <Link to="/login">
+            <Button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{
+                scale: 0.98,
+                backgroundColor: 'white',
+                border: 'black',
+                color: 'black',
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { duration: 1.5 } }}
+            >
+              Get Started
+            </Button>
           </Link>
         </ColumnLeft>
         <ColumnRight>
           <Image
-            src={PlanetOne}
-            alt='planet'
+            src={Planet}
+            alt="planet"
             whileTap={{ scale: 0.9 }}
             drag={true}
-            dragConstraints={{ left: 0, right: 250, top: 0, bottom: 50 }}
+            dragConstraints={{ left: 0, right: 80, top: 0, bottom: 20 }}
             initial={{ opacity: 0, y: -100 }}
-            animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
-          />
-          <Image
-            src={PlanetTwo}
-            alt='planet'
-            whileTap={{ scale: 0.6 }}
-            drag={true}
-            dragConstraints={{ left: 50, right: 0, top: 0, bottom: 50 }}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0, transition: { duration: 1 } }}
-          />
-          <Image
-            src={PlanetThree}
-            alt='planet'
-            whileTap={{ scale: 0.8 }}
-            drag={true}
-            dragConstraints={{ left: 0, right: 250, top: 0, bottom: 50 }}
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0, transition: { duration: 1 } }}
-          />
-          <Image
-            src={PlanetFour}
-            alt='planet'
-            whileTap={{ scale: 0.9 }}
-            drag={true}
-            dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-            initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
           />
         </ColumnRight>
       </Container>
     </Section>
   );
-}
+};
 
 export default Home;
