@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion/dist/framer-motion';
 import { Link } from 'react-router-dom';
-import Planet from '../assets/planet.svg';
+import logo from '../assets/logo.svg';
 
 const Section = styled.section`
   height: 100vh;
@@ -172,8 +172,8 @@ const Home = () => {
         </ColumnLeft>
         <ColumnRight>
           <Image
-            src={Planet}
-            alt="planet"
+            src={logo}
+            alt="logo"
             whileTap={{ scale: 0.9 }}
             drag={true}
             dragConstraints={{ left: 0, right: 80, top: 0, bottom: 20 }}
