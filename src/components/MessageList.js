@@ -1,26 +1,57 @@
 import React, { useEffect, useRef } from 'react';
 import { Message } from '../components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPreviousMessages } from '../redux/chat.slice';
 import '../styles/messageList.css';
 
 const MessageList = () => {
-  const { username } = useSelector((state) => state.auth);
-  const { messages } = useSelector((state) => state.chat);
+  const { username, token } = useSelector((state) => state.auth);
+  const { messages, chatId, currentPage, totalPages } = useSelector((state) => state.chat);
+
+  const dispatch = useDispatch();
 
   const divRef = useRef(null);
+  const listInnerRef = useRef();
 
   useEffect(() => {
     divRef.current.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // keep eye on scroll bar as it reaches upper end fetch previous 50 chat messages
+  const onScroll = () => {
+    if (listInnerRef.current) {
+      const { scrollTop } = listInnerRef.current;
+      if (scrollTop === 0 && currentPage < totalPages) {
+        console.log('reached up', currentPage);
+        dispatch(
+          getPreviousMessages({ chatid: chatId, token, page: currentPage + 1, limit: 10 })
+        )
+          .unwrap()
+          .then((data) => {
+            console.log('getPreviousMessages success paginated');
+          })
+          .catch(() => {
+            console.log('getPreviousMessages error');
+          });
+      }
+    }
+  };
+
   return (
-    <div className="messages-list">
+    <div
+      onScroll={() => onScroll()}
+      ref={listInnerRef}
+      className="messages-list"
+    >
       {messages.map((message, index) => {
         return (
           <Message
             key={index}
             messageType={
-              username.split('-')[1] === message.senderId || username === message.username ? 'sent' : 'received'
+              username.split('-')[1] === message.senderId ||
+              username === message.username
+                ? 'sent'
+                : 'received'
             }
             text={message.text}
             media={message.attachment}

@@ -10,7 +10,7 @@ const DashBoard = () => {
 
   useEffect(() => {
     if (isLoggedIn === false) {
-      navigate('/');
+      navigate('/login');
     }
   }, [isLoggedIn, navigate]);
 

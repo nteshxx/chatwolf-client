@@ -3,9 +3,9 @@ import ChatService from "../services/chat.service";
 
 export const getPreviousMessages = createAsyncThunk(
   "chat/get-messages",
-  async ({ chatid, token }, thunkAPI) => {
+  async ({ chatid, token, page, limit }, thunkAPI) => {
     try {
-      const data = await ChatService.getPreviousMessages(chatid, token);
+      const data = await ChatService.getPreviousMessages(chatid, token, page, limit);
       return data;
     } catch (error) {
       const message =
@@ -65,6 +65,8 @@ const chatSlice = createSlice({
     onlineUsers: {},
     chats: [],
     messages: [],
+    currentPage: 0,
+    totalPages: 0,
     receiver: 'Chat Wolf',
     receiverAvatar: null,
     chatId: '',
@@ -78,6 +80,7 @@ const chatSlice = createSlice({
     },
     setChatId: (state, action) => {
       state.chatId = action.payload
+      state.messages = [];
     },
     setMessages: (state, action) => {
       state.messages = action.payload
@@ -91,7 +94,9 @@ const chatSlice = createSlice({
   },
   extraReducers: {
     [getPreviousMessages.fulfilled]: (state, action) => {
-      state.messages = action.payload.messages;
+      state.messages = [...action.payload.result.messages, ...state.messages ];
+      state.currentPage = action.payload.result.currentPage;
+      state.totalPages = action.payload.result.totalPages;
     },
     [getPreviousMessages.rejected]: (state, action) => {
       state.messages = [];

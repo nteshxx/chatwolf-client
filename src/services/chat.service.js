@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const { REACT_APP_CHAT_API } = process.env;
 
-const getPreviousMessages = async (chatId, token) => {
-  const response = await axios.post(`${REACT_APP_CHAT_API}/chat/get-messages`, { chatId }, {
+const getPreviousMessages = async (chatId, token, page, limit) => {
+  const response = await axios.get(`${REACT_APP_CHAT_API}/chat/get-messages?chatId=${chatId}&page=${page}&limit=${limit}`, {
     headers: {
       'Authorization': `Bearer ${token}`
     }

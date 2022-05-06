@@ -40,7 +40,7 @@ const ChatCard = (props) => {
       dispatch(setChats(tempChats));
     }
     dispatch(setChatId(chatid));
-    dispatch(getPreviousMessages({ chatid, token }))
+    dispatch(getPreviousMessages({ chatid, token, page: 1, limit: 50 }))
       .unwrap()
       .then(() => {
         console.log("getPreviousMessages success");
