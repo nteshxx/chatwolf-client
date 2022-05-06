@@ -22,9 +22,9 @@ const MessageList = () => {
     if (listInnerRef.current) {
       const { scrollTop } = listInnerRef.current;
       if (scrollTop === 0 && currentPage < totalPages) {
-        console.log('reached up', currentPage);
+        console.log('reached end of ', currentPage);
         dispatch(
-          getPreviousMessages({ chatid: chatId, token, page: currentPage + 1, limit: 10 })
+          getPreviousMessages({ chatid: chatId, token, page: currentPage + 1, limit: 50 })
         )
           .unwrap()
           .then((data) => {
