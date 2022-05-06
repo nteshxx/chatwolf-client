@@ -1,14 +1,26 @@
 .about {
+  display: 'flex';
+  align-items: 'center';
+  justify-content: 'center';
+  height: '100vh';
+  width: '100vw';
   text-align: center;
-  margin: 12rem auto;
+  margin: auto;
   line-height: 30px;
+  overflow: hidden;
 }
 
-.about h2 {
+.about-container {
+  height: 100%;
+  width: 100%;
+  margin-top: 35vh;
+}
+
+.about-container h2 {
   color: #fd1593;
 }
 
-.about p {
+.about-container p {
   margin-top: 0.2rem;
 }
 
