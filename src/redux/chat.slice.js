@@ -72,7 +72,7 @@ export const sendMessage = createAsyncThunk(
 const chatSlice = createSlice({
   name: 'chat',
   initialState: {
-    status: false,
+    loadStatus: false,
     onlineUsers: {},
     chats: [{ _id: 0, name: 'Loading...', text: 'Please Wait!' }],
     messages: [{ text: 'Hello, Sir' }, { text: 'Thanks, for choosing us!' }],
@@ -85,6 +85,9 @@ const chatSlice = createSlice({
   reducers: {
     setReceiver: (state, action) => {
       state.receiver = action.payload;
+    },
+    setLoadStatus: (state, action) => {
+      state.loadStatus = true;
     },
     setReceiverAvatar: (state, action) => {
       state.receiverAvatar = action.payload;
@@ -108,11 +111,13 @@ const chatSlice = createSlice({
       state.messages = [...action.payload.result.messages, ...state.messages];
       state.currentPage = action.payload.result.currentPage;
       state.totalPages = action.payload.result.totalPages;
+      state.loadStatus = false;
     },
     [getPreviousMessages.rejected]: (state, action) => {
       state.messages = [];
       state.currentPage = 0;
       state.totalPages = 0;
+      state.loadStatus = false;
     },
     [getAllConversations.fulfilled]: (state, action) => {
       state.chats = action.payload.chats;
@@ -120,17 +125,14 @@ const chatSlice = createSlice({
     [getAllConversations.rejected]: (state, action) => {
       state.chats = [];
     },
-    [sendMessage.fulfilled]: (state, action) => {
-      state.status = true;
-    },
-    [sendMessage.rejected]: (state, action) => {
-      state.status = false;
-    },
+    [sendMessage.fulfilled]: (state, action) => {},
+    [sendMessage.rejected]: (state, action) => {},
   },
 });
 
 export const {
   setMessages,
+  setLoadStatus,
   setChatId,
   setReceiver,
   setReceiverAvatar,

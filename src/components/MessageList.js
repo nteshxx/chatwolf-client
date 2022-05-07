@@ -6,7 +6,9 @@ import '../styles/messageList.css';
 
 const MessageList = () => {
   const { username, token } = useSelector((state) => state.auth);
-  const { messages, chatId, currentPage, totalPages } = useSelector((state) => state.chat);
+  const { messages, chatId, currentPage, totalPages, loadStatus } = useSelector(
+    (state) => state.chat
+  );
 
   const dispatch = useDispatch();
 
@@ -24,7 +26,12 @@ const MessageList = () => {
       if (scrollTop === 0 && currentPage < totalPages) {
         console.log('reached end of ', currentPage);
         dispatch(
-          getPreviousMessages({ chatid: chatId, token, page: currentPage + 1, limit: 50 })
+          getPreviousMessages({
+            chatid: chatId,
+            token,
+            page: currentPage + 1,
+            limit: 50,
+          })
         )
           .unwrap()
           .then((data) => {
@@ -43,22 +50,32 @@ const MessageList = () => {
       ref={listInnerRef}
       className="messages-list"
     >
-      {messages.map((message, index) => {
-        return (
-          <Message
-            key={index}
-            messageType={
-              username.split('-')[1] === message.senderId ||
-              username === message.username
-                ? 'sent'
-                : 'received'
-            }
-            text={message.text}
-            media={message.attachment}
-            index={index}
-          />
-        );
-      })}
+      {loadStatus ? (
+        <Message
+          key={0}
+          messageType={'received'}
+          text={'loading...'}
+          media={null}
+          index={0}
+        />
+      ) : (
+        messages.map((message, index) => {
+          return (
+            <Message
+              key={index}
+              messageType={
+                username.split('-')[1] === message.senderId ||
+                username === message.username
+                  ? 'sent'
+                  : 'received'
+              }
+              text={message.text}
+              media={message.attachment}
+              index={index}
+            />
+          );
+        })
+      )}
       <div ref={divRef} />
     </div>
   );

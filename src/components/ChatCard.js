@@ -7,6 +7,7 @@ import {
   setReceiverAvatar,
   setChatId,
   setChats,
+  setLoadStatus,
 } from '../redux/chat.slice';
 import '../styles/chatcard.css';
 
@@ -50,6 +51,7 @@ const ChatCard = (props) => {
       dispatch(setChats(tempChats));
     }
     dispatch(setChatId(chatid));
+    dispatch(setLoadStatus());
     dispatch(getPreviousMessages({ chatid, token, page: 1, limit: 50 }))
       .unwrap()
       .then(() => {
