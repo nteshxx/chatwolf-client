@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOnlineUsers, getPreviousMessages, setReceiver, setChatId } from "../redux/chat.slice";
+import { setOnlineUsers, getPreviousMessages, setReceiver, setChatId, setMessages } from "../redux/chat.slice";
 import '../styles/onlineusers.css';
 
 const OnlineUsers = () => {
@@ -18,7 +18,8 @@ const OnlineUsers = () => {
   const selectOnlineUser = (user) => {
     const participants = [username, user].sort().map((user) => user.split('-')[1]);
     const chatid = `${participants[0]}-${participants[1]}`;
-    dispatch(getPreviousMessages({ chatid, token }))
+    dispatch(setMessages([{text: 'loading...'}]));
+    dispatch(getPreviousMessages({ chatid, token, page: 1, limit: 50 }))
       .unwrap()
       .then(() => {
         console.log("getPreviousMessages success");

@@ -51,7 +51,7 @@
 
 #online-users li {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   position: relative;
   overflow: hidden;

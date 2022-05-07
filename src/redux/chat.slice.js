@@ -1,11 +1,16 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import ChatService from "../services/chat.service";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import ChatService from '../services/chat.service';
 
 export const getPreviousMessages = createAsyncThunk(
-  "chat/get-messages",
+  'chat/get-messages',
   async ({ chatid, token, page, limit }, thunkAPI) => {
     try {
-      const data = await ChatService.getPreviousMessages(chatid, token, page, limit);
+      const data = await ChatService.getPreviousMessages(
+        chatid,
+        token,
+        page,
+        limit
+      );
       return data;
     } catch (error) {
       const message =
@@ -14,14 +19,14 @@ export const getPreviousMessages = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log("get-messages error: ", message);
+      console.log(message);
       return thunkAPI.rejectWithValue();
     }
   }
 );
 
 export const getAllConversations = createAsyncThunk(
-  "chat/all-chats",
+  'chat/all-chats',
   async ({ token }, thunkAPI) => {
     try {
       const data = await ChatService.getAllChats(token);
@@ -33,17 +38,23 @@ export const getAllConversations = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log("getAllChats error: ", message);
+      console.log(message);
       return thunkAPI.rejectWithValue();
     }
   }
 );
 
 export const sendMessage = createAsyncThunk(
-  "chat/send-message",
+  'chat/send-message',
   async ({ token, username, chatId, message, receiver }, thunkAPI) => {
     try {
-      const data = await ChatService.sendMessage(token, username, chatId, message, receiver);
+      const data = await ChatService.sendMessage(
+        token,
+        username,
+        chatId,
+        message,
+        receiver
+      );
       return data;
     } catch (error) {
       const message =
@@ -52,19 +63,19 @@ export const sendMessage = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log("send-message error: ", message);
+      console.log(message);
       return thunkAPI.rejectWithValue();
     }
   }
 );
 
 const chatSlice = createSlice({
-  name: "chat",
+  name: 'chat',
   initialState: {
     status: false,
     onlineUsers: {},
-    chats: [],
-    messages: [],
+    chats: [{ _id: 0, name: 'Loading...', text: 'Please Wait!' }],
+    messages: [{ text: 'Hello, Sir' }, { text: 'Thanks, for choosing us!' }],
     currentPage: 0,
     totalPages: 0,
     receiver: 'Chat Wolf',
@@ -73,33 +84,35 @@ const chatSlice = createSlice({
   },
   reducers: {
     setReceiver: (state, action) => {
-      state.receiver = action.payload
+      state.receiver = action.payload;
     },
     setReceiverAvatar: (state, action) => {
-      state.receiverAvatar = action.payload
+      state.receiverAvatar = action.payload;
     },
     setChatId: (state, action) => {
-      state.chatId = action.payload
+      state.chatId = action.payload;
       state.messages = [];
     },
     setMessages: (state, action) => {
-      state.messages = action.payload
+      state.messages = action.payload;
     },
     setOnlineUsers: (state, action) => {
-      state.onlineUsers = action.payload
+      state.onlineUsers = action.payload;
     },
     setChats: (state, action) => {
-      state.chats = action.payload
-    }
+      state.chats = action.payload;
+    },
   },
   extraReducers: {
     [getPreviousMessages.fulfilled]: (state, action) => {
-      state.messages = [...action.payload.result.messages, ...state.messages ];
+      state.messages = [...action.payload.result.messages, ...state.messages];
       state.currentPage = action.payload.result.currentPage;
       state.totalPages = action.payload.result.totalPages;
     },
     [getPreviousMessages.rejected]: (state, action) => {
       state.messages = [];
+      state.currentPage = 0;
+      state.totalPages = 0;
     },
     [getAllConversations.fulfilled]: (state, action) => {
       state.chats = action.payload.chats;
@@ -116,6 +129,13 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setMessages, setChatId, setReceiver, setReceiverAvatar, setOnlineUsers, setChats } = chatSlice.actions;
+export const {
+  setMessages,
+  setChatId,
+  setReceiver,
+  setReceiverAvatar,
+  setOnlineUsers,
+  setChats,
+} = chatSlice.actions;
 const { reducer } = chatSlice;
 export default reducer;

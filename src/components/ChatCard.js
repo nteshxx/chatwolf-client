@@ -1,27 +1,37 @@
 import React from 'react';
 import defaultAvatar from '../assets/default-user.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPreviousMessages, setReceiver, setReceiverAvatar, setChatId, setChats } from "../redux/chat.slice";
+import {
+  getPreviousMessages,
+  setReceiver,
+  setReceiverAvatar,
+  setChatId,
+  setChats,
+} from '../redux/chat.slice';
 import '../styles/chatcard.css';
 
 const ChatCard = (props) => {
   const { chatId, userId, avatar, text, timeStamp, unseenCount } = props;
-  
+
   const lastMessageTime = new Date(timeStamp);
   const currentTime = new Date();
   const millisecondsPerDay = 1000 * 60 * 60 * 24;
   const millisBetween = currentTime.getTime() - lastMessageTime.getTime();
   const days = Math.floor(millisBetween / millisecondsPerDay);
 
-  let time = '';
+  let time = 'now';
 
   if (days === 0) {
     // show time
-    time = lastMessageTime.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+    time = lastMessageTime.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    });
   } else if (days === 1) {
     // show Yesterday
-    time = "Yesterday"
-  } else {
+    time = 'Yesterday';
+  } else if (days > 1) {
     // show date/month/year
     time = lastMessageTime.toLocaleString('en-US').split(',')[0];
     time = `${time.split('/')[1]}/${time.split('/')[0]}/${time.split('/')[2]}`;
@@ -43,17 +53,20 @@ const ChatCard = (props) => {
     dispatch(getPreviousMessages({ chatid, token, page: 1, limit: 50 }))
       .unwrap()
       .then(() => {
-        console.log("getPreviousMessages success");
+        console.log('getPreviousMessages success');
       })
       .catch(() => {
-        console.log("getPreviousMessages error");
+        console.log('getPreviousMessages error');
       });
     dispatch(setReceiver(user));
     dispatch(setReceiverAvatar(userAvatar));
   };
 
   return (
-    <div className="chat-card" onClick={() => selectCard(chatId, userId, avatar)}>
+    <div
+      className="chat-card"
+      onClick={() => selectCard(chatId, userId, avatar)}
+    >
       <div className="chat-card-image">
         <img src={avatar ? avatar : defaultAvatar} alt="" />
       </div>
